@@ -7,6 +7,7 @@ $ecsConfigBuilder = require __DIR__ . '/vendor/php-forge/coding-standard/config/
 
 return $ecsConfigBuilder->withPaths(
     [
+        __DIR__ . '/config',
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ],
