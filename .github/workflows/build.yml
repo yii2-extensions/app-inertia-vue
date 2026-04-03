@@ -1,23 +1,33 @@
 ---
-on:
-  pull_request: &ignore-paths
-    paths-ignore:
-      - ".gitattributes"
-      - ".gitignore"
-      - "CHANGELOG.md"
-      - "docs/**"
-      - "README.md"
-
-  push: *ignore-paths
-
 name: build
 
 permissions:
   contents: read
 
+on:
+  pull_request: &ignore-paths
+    paths-ignore:
+      - ".bowerrc"
+      - ".editorconfig"
+      - ".git-blame-ignore-revs"
+      - ".gitattributes"
+      - ".github/CONTRIBUTING.md"
+      - ".github/FUNDING.yml"
+      - ".github/ISSUE_TEMPLATE.md"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+      - ".github/SECURITY.md"
+      - ".gitignore"
+      - "docker-compose.yml"
+      - "LICENSE.md"
+      - "README.md"
+      - "requirements.php"
+      - "Vagrantfile"
+
+  push: *ignore-paths
+
 jobs:
-  phpunit:
-    uses: yii2-framework/actions/.github/workflows/phpunit.yml@main
+  codeception:
+    uses: yii2-framework/actions/.github/workflows/codeception.yml@v1
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     with:
@@ -25,3 +35,4 @@ jobs:
       coverage-file: tests/support/output/coverage.xml
       extensions: dom, json, gd, imagick, pdo_sqlite
       php-version: '["8.2","8.3","8.4","8.5"]'
+
