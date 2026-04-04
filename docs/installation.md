@@ -29,7 +29,9 @@ npm install
 php yii migrate
 ```
 
-This creates the `user` table and seeds a default admin user (`admin` / `admin`).
+This creates the `user` table and seeds a default admin user (`admin` / `admin`) for initial local setup.
+
+**Important:** Change these credentials immediately and do not use them in shared or production environments.
 
 ### Start the development servers
 
