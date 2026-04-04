@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/vue3'
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3'
 
 const page = usePage()
 
@@ -16,8 +16,11 @@ const submit = () => {
 }
 
 const fieldError = (field) => {
-    const errors = page.props.errors
-    return errors?.[field]?.[0] || null
+    const error = page.props.errors?.[field]
+    if (Array.isArray(error)) {
+        return error[0] ?? null
+    }
+    return typeof error === 'string' ? error : null
 }
 </script>
 
@@ -53,19 +56,19 @@ const fieldError = (field) => {
 
                         <form @submit.prevent="submit">
                             <div class="mb-4">
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Your Username</label>
+                                <label for="login-username" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Your Username</label>
                                 <div :class="['flex border rounded-lg overflow-hidden transition-all focus-within:ring-2', fieldError('username') ? 'border-red-500 focus-within:ring-red-500/25' : 'border-gray-300 dark:border-gray-600 focus-within:border-primary-500 focus-within:ring-primary-500/25']">
                                     <span class="flex items-center justify-center pl-3 pr-2 text-gray-400">&#128100;</span>
-                                    <input v-model="form['LoginForm[username]']" type="text" class="w-full py-2.5 pr-3 bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400" placeholder="admin" autofocus />
+                                    <input id="login-username" v-model="form['LoginForm[username]']" type="text" class="w-full py-2.5 pr-3 bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400" placeholder="admin" autofocus />
                                 </div>
                                 <p v-if="fieldError('username')" class="text-red-600 dark:text-red-400 text-sm mt-1">{{ fieldError('username') }}</p>
                             </div>
 
                             <div class="mb-4">
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Your Password</label>
+                                <label for="login-password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Your Password</label>
                                 <div :class="['flex border rounded-lg overflow-hidden transition-all focus-within:ring-2', fieldError('password') ? 'border-red-500 focus-within:ring-red-500/25' : 'border-gray-300 dark:border-gray-600 focus-within:border-primary-500 focus-within:ring-primary-500/25']">
                                     <span class="flex items-center justify-center pl-3 pr-2 text-gray-400">&#128274;</span>
-                                    <input v-model="form['LoginForm[password]']" type="password" class="w-full py-2.5 pr-3 bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400" placeholder="admin" />
+                                    <input id="login-password" v-model="form['LoginForm[password]']" type="password" class="w-full py-2.5 pr-3 bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400" placeholder="admin" />
                                 </div>
                                 <p v-if="fieldError('password')" class="text-red-600 dark:text-red-400 text-sm mt-1">{{ fieldError('password') }}</p>
                             </div>
@@ -85,12 +88,12 @@ const fieldError = (field) => {
                             <div class="text-center mt-4">
                                 <p class="mb-2 text-sm text-gray-600 dark:text-gray-400">
                                     Don't have an account?
-                                    <a href="/user/signup" class="font-semibold text-primary-600 dark:text-primary-400 hover:underline">Sign up</a>
+                                    <Link href="/user/signup" class="font-semibold text-primary-600 dark:text-primary-400 hover:underline">Sign up</Link>
                                 </p>
                                 <div class="flex justify-center gap-3 text-sm">
-                                    <a href="/user/request-password-reset" class="text-primary-600 dark:text-primary-400 hover:underline">Forgot password</a>
+                                    <Link href="/user/request-password-reset" class="text-primary-600 dark:text-primary-400 hover:underline">Forgot password</Link>
                                     <span class="text-gray-300 dark:text-gray-600">|</span>
-                                    <a href="/user/resend-verification-email" class="text-primary-600 dark:text-primary-400 hover:underline">Resend verification</a>
+                                    <Link href="/user/resend-verification-email" class="text-primary-600 dark:text-primary-400 hover:underline">Resend verification</Link>
                                 </div>
                             </div>
                         </div>

@@ -1,14 +1,10 @@
 <script setup>
 import { ref } from 'vue'
-import { Link, usePage, router } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import ThemeToggle from './ThemeToggle.vue'
 
 const page = usePage()
 const open = ref(false)
-
-const logout = () => {
-    router.post('/user/logout')
-}
 </script>
 
 <template>
@@ -29,9 +25,9 @@ const logout = () => {
                         <Link v-if="page.props.auth.canViewUsers" href="/user/index" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">Users</Link>
                         <Link v-if="page.props.auth.isGuest" href="/user/signup" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">Signup</Link>
                         <Link v-if="page.props.auth.isGuest" href="/user/login" class="px-3 py-2 text-sm font-medium text-primary-400 hover:text-primary-300 rounded-md transition-colors">Login</Link>
-                        <a v-if="!page.props.auth.isGuest" href="#" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors" @click.prevent="logout">
+                        <Link v-if="!page.props.auth.isGuest" href="/user/logout" method="post" as="button" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors cursor-pointer">
                             Logout ({{ page.props.auth.user?.username }})
-                        </a>
+                        </Link>
                         <div class="ml-2 pl-2 border-l border-gray-800">
                             <ThemeToggle />
                         </div>
@@ -59,9 +55,9 @@ const logout = () => {
                     <Link v-if="page.props.auth.canViewUsers" href="/user/index" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">Users</Link>
                     <Link v-if="page.props.auth.isGuest" href="/user/signup" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">Signup</Link>
                     <Link v-if="page.props.auth.isGuest" href="/user/login" class="block px-3 py-2 text-sm font-medium text-primary-400 rounded-md">Login</Link>
-                    <a v-if="!page.props.auth.isGuest" href="#" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md" @click.prevent="logout">
+                    <Link v-if="!page.props.auth.isGuest" href="/user/logout" method="post" as="button" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md text-left w-full cursor-pointer">
                         Logout ({{ page.props.auth.user?.username }})
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>

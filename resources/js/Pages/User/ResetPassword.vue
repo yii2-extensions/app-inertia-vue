@@ -21,8 +21,11 @@ const submit = () => {
 }
 
 const fieldError = (field) => {
-    const errors = page.props.errors
-    return errors?.[field]?.[0] || null
+    const error = page.props.errors?.[field]
+    if (Array.isArray(error)) {
+        return error[0] ?? null
+    }
+    return typeof error === 'string' ? error : null
 }
 </script>
 
@@ -61,10 +64,10 @@ const fieldError = (field) => {
 
                         <form @submit.prevent="submit">
                             <div class="mb-5">
-                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">New Password</label>
+                                <label for="reset-password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">New Password</label>
                                 <div :class="['flex border rounded-lg overflow-hidden transition-all focus-within:ring-2', fieldError('password') ? 'border-red-500 focus-within:ring-red-500/25' : 'border-gray-300 dark:border-gray-600 focus-within:border-primary-500 focus-within:ring-primary-500/25']">
                                     <span class="flex items-center justify-center pl-3 pr-2 text-gray-400">&#128274;</span>
-                                    <input v-model="form['ResetPasswordForm[password]']" type="password" class="w-full py-2.5 pr-3 bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400" placeholder="Password" autofocus />
+                                    <input id="reset-password" v-model="form['ResetPasswordForm[password]']" type="password" class="w-full py-2.5 pr-3 bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400" placeholder="Password" autofocus />
                                 </div>
                                 <p v-if="fieldError('password')" class="text-red-600 dark:text-red-400 text-sm mt-1">{{ fieldError('password') }}</p>
                             </div>

@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const theme = ref('light')
+const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
 const getPreferred = () => {
     const stored = localStorage.getItem('theme')
@@ -10,7 +11,7 @@ const getPreferred = () => {
         return stored
     }
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    return mediaQuery.matches ? 'dark' : 'light'
 }
 
 const apply = (value) => {
@@ -29,14 +30,19 @@ const toggle = () => {
     apply(theme.value === 'dark' ? 'light' : 'dark')
 }
 
+const handleSystemThemeChange = (e) => {
+    if (!localStorage.getItem('theme')) {
+        apply(e.matches ? 'dark' : 'light')
+    }
+}
+
 onMounted(() => {
     apply(getPreferred())
+    mediaQuery.addEventListener('change', handleSystemThemeChange)
+})
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            apply(e.matches ? 'dark' : 'light')
-        }
-    })
+onUnmounted(() => {
+    mediaQuery.removeEventListener('change', handleSystemThemeChange)
 })
 </script>
 

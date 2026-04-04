@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-// comment out the following two lines when deployed to production
-defined('YII_DEBUG') || define('YII_DEBUG', true);
-defined('YII_ENV') || define('YII_ENV', 'dev');
+defined('YII_ENV') || define('YII_ENV', getenv('YII_ENV') ?: 'prod');
+defined('YII_DEBUG') || define('YII_DEBUG', YII_ENV !== 'prod');
 
 require __DIR__ . '/../vendor/autoload.php';
 

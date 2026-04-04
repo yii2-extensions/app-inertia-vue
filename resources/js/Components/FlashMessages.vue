@@ -24,7 +24,7 @@ watch(
         alerts.value = Object.entries(flash)
             .filter(([, message]) => message)
             .map(([type, message]) => ({
-                id: Date.now() + Math.random(),
+                id: crypto.randomUUID(),
                 type: typeMap[type] || 'info',
                 message,
             }))
