@@ -44,10 +44,11 @@ final class ContactFormTest extends \Codeception\Test\Unit
         );
 
         // using Yii2 module actions to check email was sent
-        $this->tester?->seeEmailIsSent();
+        self::assertNotNull($this->tester, 'UnitTester must be configured for email assertions.');
+        $this->tester->seeEmailIsSent();
 
         /** @phpstan-var \yii\symfonymailer\Message $emailMessage */
-        $emailMessage = $this->tester?->grabLastSentEmail();
+        $emailMessage = $this->tester->grabLastSentEmail();
 
         verify($emailMessage)
             ->instanceOf(

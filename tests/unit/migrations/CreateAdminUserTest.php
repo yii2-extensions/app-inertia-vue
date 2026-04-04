@@ -78,9 +78,12 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
                 User::STATUS_ACTIVE,
                 "Failed asserting that 'status' is 'active'.",
             );
-        verify(Yii::$app->security->validatePassword('admin', $admin->password_hash))
+        /** @phpstan-var string $expectedPassword */
+        $expectedPassword = Yii::$app->params['admin.password'] ?? 'admin';
+
+        verify(Yii::$app->security->validatePassword($expectedPassword, $admin->password_hash))
             ->true(
-                "Failed asserting that 'admin' password is 'admin'.",
+                'Failed asserting that admin password matches configured value.',
             );
 
         // clean up for other tests.
