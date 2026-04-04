@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, TransitionGroup } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { FwbAlert } from "flowbite-vue";
 
@@ -38,9 +38,28 @@ const dismiss = (id) => {
 </script>
 
 <template>
-    <div v-for="alert in alerts" :key="alert.id" class="mb-4">
-        <FwbAlert :type="alert.type" closable @close="dismiss(alert.id)">
-            {{ alert.message }}
-        </FwbAlert>
-    </div>
+    <TransitionGroup name="flash" tag="div">
+        <div v-for="alert in alerts" :key="alert.id" class="mb-4">
+            <FwbAlert :type="alert.type" closable @close="dismiss(alert.id)">
+                {{ alert.message }}
+            </FwbAlert>
+        </div>
+    </TransitionGroup>
 </template>
+
+<style scoped>
+.flash-enter-active,
+.flash-leave-active {
+    transition: all 0.3s ease;
+}
+
+.flash-enter-from {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.flash-leave-to {
+    opacity: 0;
+    transform: translateX(20px);
+}
+</style>
