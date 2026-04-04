@@ -78,6 +78,10 @@ const sortBy = (attribute) => {
 }
 
 const goToPage = (page) => {
+    if (page < 1 || page > props.pagination.pageCount || page === props.pagination.currentPage) {
+        return
+    }
+
     router.get('/user/index', { ...buildParams(), page }, { preserveState: true, preserveScroll: true })
 }
 

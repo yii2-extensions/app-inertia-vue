@@ -15,7 +15,7 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post(`/user/reset-password?token=${props.token}`, {
+    form.post(`/user/reset-password?token=${encodeURIComponent(props.token)}`, {
         preserveScroll: true,
     })
 }

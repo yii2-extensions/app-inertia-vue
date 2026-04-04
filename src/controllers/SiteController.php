@@ -82,7 +82,7 @@ class SiteController extends Controller
         $exception = Yii::$app->errorHandler->exception;
 
         $statusCode = $exception instanceof HttpException ? $exception->statusCode : 500;
-        $message = $exception instanceof \Throwable
+        $message = (YII_DEBUG && $exception instanceof \Throwable)
             ? $exception->getMessage()
             : 'An internal server error occurred.';
 
