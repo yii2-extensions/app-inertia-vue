@@ -23,6 +23,16 @@ class ContactForm extends Model
     public string $turnstileToken = '';
 
     /**
+     * @phpstan-return array<string, string>
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'turnstileToken' => 'CAPTCHA verification',
+        ];
+    }
+
+    /**
      * Sends an email to the specified email address using the information collected by this model.
      */
     public function contact(MailerInterface $mailer, string $email, string $senderEmail, string $senderName): bool
@@ -71,16 +81,6 @@ class ContactForm extends Model
                 'turnstileToken',
                 'validateTurnstile',
             ],
-        ];
-    }
-
-    /**
-     * @phpstan-return array<string, string>
-     */
-    public function attributeLabels(): array
-    {
-        return [
-            'turnstileToken' => 'CAPTCHA verification',
         ];
     }
 
