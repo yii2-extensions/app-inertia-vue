@@ -35,4 +35,3 @@ jobs:
       coverage-file: tests/support/output/coverage.xml
       extensions: dom, json, gd, imagick, pdo_sqlite
       php-version: '["8.2","8.3","8.4","8.5"]'
-

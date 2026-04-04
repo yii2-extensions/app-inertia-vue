@@ -1,31 +1,69 @@
 <script setup>
-import { ref } from 'vue'
-import { Link, usePage } from '@inertiajs/vue3'
-import ThemeToggle from './ThemeToggle.vue'
+import { ref } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
+import ThemeToggle from "./ThemeToggle.vue";
 
-const page = usePage()
-const open = ref(false)
+const page = usePage();
+const open = ref(false);
 </script>
 
 <template>
     <header>
-        <nav class="fixed top-0 inset-x-0 z-50 bg-gray-950 border-b border-gray-800/50">
+        <nav
+            class="fixed top-0 inset-x-0 z-50 bg-gray-950 border-b border-gray-800/50"
+        >
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <!-- Brand -->
-                    <Link href="/" class="font-display font-bold text-lg text-white tracking-tight hover:text-primary-400 transition-colors">
+                    <Link
+                        href="/"
+                        class="font-display font-bold text-lg text-white tracking-tight hover:text-primary-400 transition-colors"
+                    >
                         {{ page.props.appName }}
                     </Link>
 
                     <!-- Desktop nav -->
                     <div class="hidden md:flex items-center gap-1">
-                        <Link href="/" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">Home</Link>
-                        <Link href="/site/about" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">About</Link>
-                        <Link href="/site/contact" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">Contact</Link>
-                        <Link v-if="page.props.auth.canViewUsers" href="/user/index" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">Users</Link>
-                        <Link v-if="page.props.auth.isGuest" href="/user/signup" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors">Signup</Link>
-                        <Link v-if="page.props.auth.isGuest" href="/user/login" class="px-3 py-2 text-sm font-medium text-primary-400 hover:text-primary-300 rounded-md transition-colors">Login</Link>
-                        <Link v-if="!page.props.auth.isGuest" href="/user/logout" method="post" as="button" class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors cursor-pointer">
+                        <Link
+                            href="/"
+                            class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                            >Home</Link
+                        >
+                        <Link
+                            href="/site/about"
+                            class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                            >About</Link
+                        >
+                        <Link
+                            href="/site/contact"
+                            class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                            >Contact</Link
+                        >
+                        <Link
+                            v-if="page.props.auth.canViewUsers"
+                            href="/user/index"
+                            class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                            >Users</Link
+                        >
+                        <Link
+                            v-if="page.props.auth.isGuest"
+                            href="/user/signup"
+                            class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                            >Signup</Link
+                        >
+                        <Link
+                            v-if="page.props.auth.isGuest"
+                            href="/user/login"
+                            class="px-3 py-2 text-sm font-medium text-primary-400 hover:text-primary-300 rounded-md transition-colors"
+                            >Login</Link
+                        >
+                        <Link
+                            v-if="!page.props.auth.isGuest"
+                            href="/user/logout"
+                            method="post"
+                            as="button"
+                            class="px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors cursor-pointer"
+                        >
                             Logout ({{ page.props.auth.user?.username }})
                         </Link>
                         <div class="ml-2 pl-2 border-l border-gray-800">
@@ -36,10 +74,31 @@ const open = ref(false)
                     <!-- Mobile toggle -->
                     <div class="flex items-center gap-2 md:hidden">
                         <ThemeToggle />
-                        <button class="p-2 text-gray-400 hover:text-white rounded-md transition-colors" @click="open = !open" :aria-expanded="open" aria-label="Toggle navigation">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path v-if="!open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                                <path v-else stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        <button
+                            class="p-2 text-gray-400 hover:text-white rounded-md transition-colors"
+                            @click="open = !open"
+                            :aria-expanded="open"
+                            aria-label="Toggle navigation"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    v-if="!open"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                                <path
+                                    v-else
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
                             </svg>
                         </button>
                     </div>
@@ -47,15 +106,51 @@ const open = ref(false)
             </div>
 
             <!-- Mobile menu -->
-            <div v-show="open" class="md:hidden border-t border-gray-800/50 bg-gray-950">
+            <div
+                v-show="open"
+                class="md:hidden border-t border-gray-800/50 bg-gray-950"
+            >
                 <div class="px-4 py-3 space-y-1">
-                    <Link href="/" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">Home</Link>
-                    <Link href="/site/about" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">About</Link>
-                    <Link href="/site/contact" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">Contact</Link>
-                    <Link v-if="page.props.auth.canViewUsers" href="/user/index" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">Users</Link>
-                    <Link v-if="page.props.auth.isGuest" href="/user/signup" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md">Signup</Link>
-                    <Link v-if="page.props.auth.isGuest" href="/user/login" class="block px-3 py-2 text-sm font-medium text-primary-400 rounded-md">Login</Link>
-                    <Link v-if="!page.props.auth.isGuest" href="/user/logout" method="post" as="button" class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md text-left w-full cursor-pointer">
+                    <Link
+                        href="/"
+                        class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md"
+                        >Home</Link
+                    >
+                    <Link
+                        href="/site/about"
+                        class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md"
+                        >About</Link
+                    >
+                    <Link
+                        href="/site/contact"
+                        class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md"
+                        >Contact</Link
+                    >
+                    <Link
+                        v-if="page.props.auth.canViewUsers"
+                        href="/user/index"
+                        class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md"
+                        >Users</Link
+                    >
+                    <Link
+                        v-if="page.props.auth.isGuest"
+                        href="/user/signup"
+                        class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md"
+                        >Signup</Link
+                    >
+                    <Link
+                        v-if="page.props.auth.isGuest"
+                        href="/user/login"
+                        class="block px-3 py-2 text-sm font-medium text-primary-400 rounded-md"
+                        >Login</Link
+                    >
+                    <Link
+                        v-if="!page.props.auth.isGuest"
+                        href="/user/logout"
+                        method="post"
+                        as="button"
+                        class="block px-3 py-2 text-sm text-gray-400 hover:text-white rounded-md text-left w-full cursor-pointer"
+                    >
                         Logout ({{ page.props.auth.user?.username }})
                     </Link>
                 </div>

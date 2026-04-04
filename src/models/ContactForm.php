@@ -129,7 +129,7 @@ class ContactForm extends Model
         }
 
         try {
-            /** @var array{success: bool} $result */
+            /** @var array<string, mixed> $result */
             $result = Json::decode($response);
         } catch (\yii\base\InvalidArgumentException) {
             \Yii::warning('Turnstile response is not valid JSON.', __METHOD__);
@@ -138,7 +138,7 @@ class ContactForm extends Model
             return;
         }
 
-        if (!($result['success'] ?? false)) {
+        if (($result['success'] ?? false) !== true) {
             $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
         }
     }

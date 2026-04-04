@@ -29,24 +29,24 @@
 
 ## Screenshots
 
-| Light | Dark |
-|-------|------|
-| ![Home Light](docs/images/home-light.png) | ![Home Dark](docs/images/home-dark.png) |
-| ![Login Light](docs/images/login-light.png) | ![Login Dark](docs/images/login-dark.png) |
-| ![Users Light](docs/images/users-light.png) | ![Users Dark](docs/images/users-dark.png) |
+| Light                                           | Dark                                          |
+| ----------------------------------------------- | --------------------------------------------- |
+| ![Home Light](docs/images/home-light.png)       | ![Home Dark](docs/images/home-dark.png)       |
+| ![Login Light](docs/images/login-light.png)     | ![Login Dark](docs/images/login-dark.png)     |
+| ![Users Light](docs/images/users-light.png)     | ![Users Dark](docs/images/users-dark.png)     |
 | ![Contact Light](docs/images/contact-light.png) | ![Contact Dark](docs/images/contact-dark.png) |
 
 ## Stack
 
-| Layer | Technology |
-|-------|------------|
-| Backend | PHP 8.1+, Yii2, Inertia.js server adapter |
-| Frontend | Vue 3, Inertia.js client, Vite |
-| CSS | Tailwind CSS v4, Flowbite, Flowbite Vue |
-| CAPTCHA | Cloudflare Turnstile |
-| Testing | Codeception (unit, functional, acceptance) |
-| Static Analysis | PHPStan (max level) |
-| Asset Management | php-forge/foxy (npm via Composer) |
+| Layer            | Technology                                 |
+| ---------------- | ------------------------------------------ |
+| Backend          | PHP 8.1+, Yii2, Inertia.js server adapter  |
+| Frontend         | Vue 3, Inertia.js client, Vite             |
+| CSS              | Tailwind CSS v4, Flowbite, Flowbite Vue    |
+| CAPTCHA          | Cloudflare Turnstile                       |
+| Testing          | Codeception (unit, functional, acceptance) |
+| Static Analysis  | PHPStan (max level)                        |
+| Asset Management | php-forge/foxy (npm via Composer)          |
 
 ## Features
 

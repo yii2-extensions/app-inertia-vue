@@ -5,8 +5,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-display: 'JetBrains Mono', ui-monospace, monospace;
+    --font-sans:
+        "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    --font-display: "JetBrains Mono", ui-monospace, monospace;
 
     --color-primary-50: #f0fafb;
     --color-primary-100: #d9f2f6;
@@ -33,8 +35,16 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 80%, rgb(241 138 42 / 25%) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgb(131 201 51 / 20%) 0%, transparent 40%);
+        radial-gradient(
+            circle at 20% 80%,
+            rgb(241 138 42 / 25%) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgb(131 201 51 / 20%) 0%,
+            transparent 40%
+        );
     pointer-events: none;
 }
 
@@ -50,9 +60,21 @@
     inset: 0;
     border-radius: inherit;
     background:
-        radial-gradient(circle at 15% 85%, rgb(241 138 42 / 30%) 0%, transparent 45%),
-        radial-gradient(circle at 85% 15%, rgb(131 201 51 / 25%) 0%, transparent 40%),
-        radial-gradient(ellipse at 50% 50%, rgb(64 179 216 / 15%) 0%, transparent 60%);
+        radial-gradient(
+            circle at 15% 85%,
+            rgb(241 138 42 / 30%) 0%,
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 85% 15%,
+            rgb(131 201 51 / 25%) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgb(64 179 216 / 15%) 0%,
+            transparent 60%
+        );
     pointer-events: none;
 }
 
@@ -62,7 +84,9 @@
     border: none;
     font-weight: 600;
     letter-spacing: 0.02em;
-    transition: opacity 0.2s, transform 0.1s;
+    transition:
+        opacity 0.2s,
+        transform 0.1s;
 }
 
 .login-btn:hover {
@@ -94,7 +118,9 @@
 
 /* extension card hover effect */
 .extension-card {
-    transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition:
+        transform 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
 }
 
 .extension-card:hover {
