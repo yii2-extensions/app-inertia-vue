@@ -18,6 +18,7 @@ final class AboutCest
     public function ensureThatAboutWorks(AcceptanceTester $I): void
     {
         $I->amOnPage(Url::toRoute('/site/about'));
-        $I->see('About');
+        $I->seeResponseCodeIs(200);
+        $I->seeInSource('"component":"Site\/About"');
     }
 }

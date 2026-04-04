@@ -1,16 +1,17 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { usePage } from '@inertiajs/vue3'
+import { FwbAlert } from 'flowbite-vue'
 
 const page = usePage()
 const alerts = ref([])
 
 const typeMap = {
-    success: 'alert-success',
-    error: 'alert-danger',
-    danger: 'alert-danger',
-    info: 'alert-info',
-    warning: 'alert-warning',
+    success: 'success',
+    error: 'danger',
+    danger: 'danger',
+    info: 'info',
+    warning: 'warning',
 }
 
 watch(
@@ -24,8 +25,7 @@ watch(
             .filter(([, message]) => message)
             .map(([type, message]) => ({
                 id: Date.now() + Math.random(),
-                type,
-                cssClass: typeMap[type] || 'alert-info',
+                type: typeMap[type] || 'info',
                 message,
             }))
     },
@@ -38,8 +38,9 @@ const dismiss = (id) => {
 </script>
 
 <template>
-    <div v-for="alert in alerts" :key="alert.id" :class="['alert', alert.cssClass, 'alert-dismissible', 'fade', 'show']" role="alert">
-        {{ alert.message }}
-        <button type="button" class="btn-close" aria-label="Close" @click="dismiss(alert.id)"></button>
+    <div v-for="alert in alerts" :key="alert.id" class="mb-4">
+        <FwbAlert :type="alert.type" closable @close="dismiss(alert.id)">
+            {{ alert.message }}
+        </FwbAlert>
     </div>
 </template>

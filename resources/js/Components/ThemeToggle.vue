@@ -15,7 +15,13 @@ const getPreferred = () => {
 
 const apply = (value) => {
     theme.value = value
-    document.documentElement.setAttribute('data-bs-theme', value)
+
+    if (value === 'dark') {
+        document.documentElement.classList.add('dark')
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+
     localStorage.setItem('theme', value)
 }
 
@@ -36,7 +42,7 @@ onMounted(() => {
 
 <template>
     <button
-        class="btn btn-link nav-link fs-5"
+        class="p-2 text-gray-400 hover:text-white rounded-md text-lg transition-colors cursor-pointer"
         :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
         @click="toggle"
     >{{ theme === 'dark' ? '&#9728;' : '&#127769;' }}</button>

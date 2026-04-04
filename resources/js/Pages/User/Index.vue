@@ -1,6 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
+import {
+    FwbTable,
+    FwbTableHead,
+    FwbTableBody,
+    FwbTableRow,
+    FwbTableCell,
+    FwbTableHeadCell,
+    FwbBadge,
+    FwbPagination,
+} from 'flowbite-vue'
 
 const props = defineProps({
     users: {
@@ -25,93 +35,50 @@ const STATUS_ACTIVE = 10
 const STATUS_INACTIVE = 9
 const STATUS_DELETED = 0
 
-const statusLabels = {
-    [STATUS_ACTIVE]: { label: 'Active', class: 'bg-success' },
-    [STATUS_INACTIVE]: { label: 'Inactive', class: 'bg-warning text-dark' },
-    [STATUS_DELETED]: { label: 'Deleted', class: 'bg-danger' },
+const statusMap = {
+    [STATUS_ACTIVE]: { label: 'Active', type: 'green' },
+    [STATUS_INACTIVE]: { label: 'Inactive', type: 'yellow' },
+    [STATUS_DELETED]: { label: 'Deleted', type: 'red' },
 }
 
 const filterUsername = ref(props.filters.username || '')
 const filterEmail = ref(props.filters.email || '')
 const filterStatus = ref(props.filters.status ?? '')
-
 let debounceTimer = null
 
-const applyFilters = () => {
-    clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => {
-        const params = {}
-
-        if (filterUsername.value) {
-            params['UserSearch[username]'] = filterUsername.value
-        }
-        if (filterEmail.value) {
-            params['UserSearch[email]'] = filterEmail.value
-        }
-        if (filterStatus.value !== '') {
-            params['UserSearch[status]'] = filterStatus.value
-        }
-
-        router.get('/user/index', params, {
-            preserveState: true,
-            preserveScroll: true,
-        })
-    }, 300)
-}
-
-watch([filterUsername, filterEmail, filterStatus], applyFilters)
-
-const sortBy = (attribute) => {
-    const currentOrder = props.sort.attributes[attribute]
-    let sortParam
-
-    if (currentOrder === 4) {
-        // SORT_ASC = 4 -> flip to desc
-        sortParam = `-${attribute}`
-    } else {
-        sortParam = attribute
-    }
-
-    const params = { sort: sortParam }
-
-    if (filterUsername.value) {
-        params['UserSearch[username]'] = filterUsername.value
-    }
-    if (filterEmail.value) {
-        params['UserSearch[email]'] = filterEmail.value
-    }
-    if (filterStatus.value !== '') {
-        params['UserSearch[status]'] = filterStatus.value
-    }
-
-    router.get('/user/index', params, {
-        preserveState: true,
-        preserveScroll: true,
-    })
-}
-
-const goToPage = (page) => {
-    const params = { page }
-
-    if (filterUsername.value) {
-        params['UserSearch[username]'] = filterUsername.value
-    }
-    if (filterEmail.value) {
-        params['UserSearch[email]'] = filterEmail.value
-    }
-    if (filterStatus.value !== '') {
-        params['UserSearch[status]'] = filterStatus.value
-    }
+const buildParams = () => {
+    const params = {}
+    if (filterUsername.value) params['UserSearch[username]'] = filterUsername.value
+    if (filterEmail.value) params['UserSearch[email]'] = filterEmail.value
+    if (filterStatus.value !== '') params['UserSearch[status]'] = filterStatus.value
 
     const currentSort = Object.entries(props.sort.attributes)[0]
     if (currentSort) {
         params.sort = currentSort[1] === 3 ? `-${currentSort[0]}` : currentSort[0]
     }
 
-    router.get('/user/index', params, {
-        preserveState: true,
-        preserveScroll: true,
-    })
+    return params
+}
+
+const applyFilters = () => {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => {
+        router.get('/user/index', buildParams(), { preserveState: true, preserveScroll: true })
+    }, 300)
+}
+
+watch([filterUsername, filterEmail, filterStatus], applyFilters)
+onUnmounted(() => clearTimeout(debounceTimer))
+
+const sortBy = (attribute) => {
+    const currentOrder = props.sort.attributes[attribute]
+    const params = buildParams()
+    params.sort = currentOrder === 4 ? `-${attribute}` : attribute
+    router.get('/user/index', params, { preserveState: true, preserveScroll: true })
+}
+
+const goToPage = (page) => {
+    router.get('/user/index', { ...buildParams(), page }, { preserveState: true, preserveScroll: true })
 }
 
 const sortIcon = (attribute) => {
@@ -124,166 +91,130 @@ const sortIcon = (attribute) => {
 const formatDate = (timestamp) => {
     if (!timestamp) return ''
     const d = new Date(timestamp * 1000)
-    const day = String(d.getDate()).padStart(2, '0')
-    const month = String(d.getMonth() + 1).padStart(2, '0')
-    const year = d.getFullYear()
-    return `${day}/${month}/${year}`
+    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`
 }
 
-const getStatus = (status) => {
-    return statusLabels[status] || { label: 'Unknown', class: 'bg-secondary' }
-}
-
-const pages = () => {
-    const result = []
-    for (let i = 1; i <= props.pagination.pageCount; i++) {
-        result.push(i)
-    }
-    return result
-}
+const getStatus = (status) => statusMap[status] || { label: 'Unknown', type: 'dark' }
 </script>
 
 <template>
     <Head title="Users" />
 
-    <div class="site-users d-flex align-items-center justify-content-center">
-        <div class="card border-0 overflow-hidden login-split-card users-split-card w-100">
-            <div class="row g-0">
+    <div class="grow flex items-center justify-center">
+        <div class="overflow-hidden rounded-2xl shadow-lg dark:shadow-gray-900/50 bg-gray-50 dark:bg-gray-800 w-full max-w-[1000px]">
+            <div class="flex flex-col md:flex-row">
 
                 <!-- Brand panel -->
-                <div class="col-md-4 d-none d-md-flex login-brand-panel text-white">
-                    <div class="d-flex flex-column justify-content-between p-4 p-lg-4 w-100">
+                <div class="hidden md:flex md:w-1/3 login-brand-panel text-white">
+                    <div class="flex flex-col justify-between p-5 lg:p-6 w-full">
                         <div>
-                            <img src="/images/yii3_full_white_for_dark.svg" alt="Yii Framework" class="mb-4" height="36" />
+                            <img src="/images/yii3_full_white_for_dark.svg" alt="Yii Framework" class="mb-6" height="36" />
                         </div>
                         <div>
-                            <h1 class="fw-bold mb-3 login-brand-title">User<br />Directory</h1>
-                            <p class="opacity-75 mb-0 login-brand-text">
+                            <h1 class="font-display font-bold mb-3 text-[1.75rem] leading-tight">User<br />Directory</h1>
+                            <p class="opacity-75 text-[0.9rem]">
                                 Browse, filter, and sort registered users. Use the search fields to find specific accounts.
                             </p>
                         </div>
                         <div class="mt-4">
-                            <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="badge bg-white bg-opacity-25 rounded-pill px-3 py-2">
-                                    {{ pagination.totalCount }} {{ pagination.totalCount === 1 ? 'user' : 'users' }}
-                                </span>
-                            </div>
+                            <span class="inline-block bg-white/20 rounded-full px-4 py-1.5 text-sm font-medium backdrop-blur-sm">
+                                {{ pagination.totalCount }} {{ pagination.totalCount === 1 ? 'user' : 'users' }}
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Table panel -->
-                <div class="col-md-8">
-                    <div class="p-4 p-lg-4">
+                <div class="w-full md:w-2/3">
+                    <div class="p-4 lg:p-5">
 
                         <!-- Mobile header -->
-                        <div class="d-md-none text-center mb-4">
-                            <h1 class="h3 fw-bold mb-1">Users</h1>
-                            <p class="text-body-secondary small mb-0">Browse and filter registered users</p>
+                        <div class="md:hidden text-center mb-4">
+                            <h1 class="text-xl font-bold text-gray-900 dark:text-white">Users</h1>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Browse and filter registered users</p>
                         </div>
 
-                        <div class="users-table-wrapper">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <a href="#" @click.prevent="sortBy('username')">
-                                                USERNAME{{ sortIcon('username') }}
-                                            </a>
-                                        </th>
-                                        <th>
-                                            <a href="#" @click.prevent="sortBy('email')">
-                                                EMAIL{{ sortIcon('email') }}
-                                            </a>
-                                        </th>
-                                        <th class="col-status">
-                                            <a href="#" @click.prevent="sortBy('status')">
-                                                STATUS{{ sortIcon('status') }}
-                                            </a>
-                                        </th>
-                                        <th>
-                                            <a href="#" @click.prevent="sortBy('created_at')">
-                                                JOINED{{ sortIcon('created_at') }}
-                                            </a>
-                                        </th>
-                                    </tr>
-                                    <tr class="filters">
-                                        <td>
-                                            <input
-                                                v-model="filterUsername"
-                                                type="text"
-                                                class="form-control form-control-sm"
-                                                placeholder="Filter..."
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                v-model="filterEmail"
-                                                type="text"
-                                                class="form-control form-control-sm"
-                                                placeholder="Filter..."
-                                            />
-                                        </td>
-                                        <td>
-                                            <select v-model="filterStatus" class="form-select form-select-sm">
+                        <div class="overflow-x-auto">
+                            <FwbTable hoverable>
+                                <FwbTableHead>
+                                    <FwbTableHeadCell>
+                                        <a href="#" class="hover:text-gray-900 dark:hover:text-white no-underline" @click.prevent="sortBy('username')">Username{{ sortIcon('username') }}</a>
+                                    </FwbTableHeadCell>
+                                    <FwbTableHeadCell>
+                                        <a href="#" class="hover:text-gray-900 dark:hover:text-white no-underline" @click.prevent="sortBy('email')">Email{{ sortIcon('email') }}</a>
+                                    </FwbTableHeadCell>
+                                    <FwbTableHeadCell>
+                                        <a href="#" class="hover:text-gray-900 dark:hover:text-white no-underline" @click.prevent="sortBy('status')">Status{{ sortIcon('status') }}</a>
+                                    </FwbTableHeadCell>
+                                    <FwbTableHeadCell>
+                                        <a href="#" class="hover:text-gray-900 dark:hover:text-white no-underline" @click.prevent="sortBy('created_at')">Joined{{ sortIcon('created_at') }}</a>
+                                    </FwbTableHeadCell>
+                                </FwbTableHead>
+
+                                <!-- Filter row -->
+                                <FwbTableBody>
+                                    <FwbTableRow>
+                                        <FwbTableCell class="!py-2 bg-gray-100 dark:bg-gray-900/50">
+                                            <input v-model="filterUsername" type="text" class="w-full text-xs px-2 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500/25 outline-none" placeholder="Filter..." />
+                                        </FwbTableCell>
+                                        <FwbTableCell class="!py-2 bg-gray-100 dark:bg-gray-900/50">
+                                            <input v-model="filterEmail" type="text" class="w-full text-xs px-2 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500/25 outline-none" placeholder="Filter..." />
+                                        </FwbTableCell>
+                                        <FwbTableCell class="!py-2 bg-gray-100 dark:bg-gray-900/50">
+                                            <select v-model="filterStatus" class="w-full text-xs px-2 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500/25 outline-none">
                                                 <option value="">All</option>
                                                 <option :value="STATUS_ACTIVE">Active</option>
                                                 <option :value="STATUS_INACTIVE">Inactive</option>
                                                 <option :value="STATUS_DELETED">Deleted</option>
                                             </select>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-if="users.length === 0">
-                                        <td colspan="4" class="empty">No results found.</td>
-                                    </tr>
-                                    <tr v-for="user in users" :key="user.id">
-                                        <td>{{ user.username }}</td>
-                                        <td>
-                                            <a :href="`mailto:${user.email}`">{{ user.email }}</a>
-                                        </td>
-                                        <td>
-                                            <span :class="['badge', 'rounded-pill', getStatus(user.status).class]">
-                                                {{ getStatus(user.status).label }}
-                                            </span>
-                                        </td>
-                                        <td class="text-nowrap">{{ formatDate(user.created_at) }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </FwbTableCell>
+                                        <FwbTableCell class="!py-2 bg-gray-100 dark:bg-gray-900/50" />
+                                    </FwbTableRow>
+                                </FwbTableBody>
 
-                            <!-- Pagination -->
-                            <nav v-if="pagination.pageCount > 1" class="d-flex justify-content-center mt-3">
-                                <ul class="pagination pagination-sm mb-0">
-                                    <li
-                                        class="page-item"
-                                        :class="{ disabled: pagination.currentPage === 1 }"
-                                    >
-                                        <a class="page-link" href="#" @click.prevent="goToPage(pagination.currentPage - 1)">&laquo;</a>
-                                    </li>
-                                    <li
-                                        v-for="p in pages()"
-                                        :key="p"
-                                        class="page-item"
-                                        :class="{ active: p === pagination.currentPage }"
-                                    >
-                                        <a class="page-link" href="#" @click.prevent="goToPage(p)">{{ p }}</a>
-                                    </li>
-                                    <li
-                                        class="page-item"
-                                        :class="{ disabled: pagination.currentPage === pagination.pageCount }"
-                                    >
-                                        <a class="page-link" href="#" @click.prevent="goToPage(pagination.currentPage + 1)">&raquo;</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                                <!-- Data rows -->
+                                <FwbTableBody>
+                                    <FwbTableRow v-if="users.length === 0">
+                                        <FwbTableCell colspan="4" class="text-center !py-10 text-gray-500 dark:text-gray-400">
+                                            No results found.
+                                        </FwbTableCell>
+                                    </FwbTableRow>
+
+                                    <FwbTableRow v-for="user in users" :key="user.id">
+                                        <FwbTableCell class="font-medium text-gray-900 dark:text-white">
+                                            {{ user.username }}
+                                        </FwbTableCell>
+                                        <FwbTableCell>
+                                            <a :href="`mailto:${user.email}`" class="text-primary-600 dark:text-primary-400 hover:underline">{{ user.email }}</a>
+                                        </FwbTableCell>
+                                        <FwbTableCell>
+                                            <FwbBadge :type="getStatus(user.status).type" size="sm">
+                                                {{ getStatus(user.status).label }}
+                                            </FwbBadge>
+                                        </FwbTableCell>
+                                        <FwbTableCell class="whitespace-nowrap">
+                                            {{ formatDate(user.created_at) }}
+                                        </FwbTableCell>
+                                    </FwbTableRow>
+                                </FwbTableBody>
+                            </FwbTable>
 
                             <!-- Summary -->
-                            <div v-if="users.length > 0" class="summary">
+                            <div v-if="users.length > 0" class="text-xs text-gray-500 dark:text-gray-400 text-right mt-2">
                                 Showing {{ (pagination.currentPage - 1) * pagination.pageSize + 1 }}-{{ Math.min(pagination.currentPage * pagination.pageSize, pagination.totalCount) }} of {{ pagination.totalCount }} {{ pagination.totalCount === 1 ? 'item' : 'items' }}.
                             </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div v-if="pagination.pageCount > 1" class="flex justify-center mt-4">
+                            <FwbPagination
+                                :model-value="pagination.currentPage"
+                                :total-pages="pagination.pageCount"
+                                :show-labels="false"
+                                previous-label="Prev"
+                                next-label="Next"
+                                @page-changed="goToPage"
+                            />
                         </div>
 
                     </div>

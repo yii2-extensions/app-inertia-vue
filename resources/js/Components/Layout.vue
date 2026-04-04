@@ -5,11 +5,11 @@ import FlashMessages from './FlashMessages.vue'
 </script>
 
 <template>
-    <div class="d-flex flex-column min-vh-100">
+    <div class="flex flex-col min-h-screen">
         <Navbar />
 
-        <main id="main" class="flex-grow-1" role="main">
-            <div class="container">
+        <main class="grow flex flex-col">
+            <div class="pt-[70px] px-4 sm:px-6 lg:px-8 pb-6 max-w-7xl mx-auto w-full flex flex-col grow">
                 <FlashMessages />
                 <slot />
             </div>

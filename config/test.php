@@ -12,6 +12,7 @@ use yii\symfonymailer\Mailer;
 use yii\symfonymailer\Message;
 use yii\web\JsonParser;
 
+/** @phpstan-var array<string, mixed> $params */
 $params = require __DIR__ . '/params.php';
 
 /**
@@ -95,5 +96,5 @@ return [
             ],
         ],
     ],
-    'params' => $params,
+    'params' => [...$params, 'turnstile.secretKey' => ''],
 ];

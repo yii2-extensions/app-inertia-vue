@@ -33,6 +33,7 @@ final class LoginCest
     public function ensureThatLoginPageWorks(AcceptanceTester $I): void
     {
         $I->amOnPage(Url::toRoute('/user/login'));
-        $I->see('Login');
+        $I->seeResponseCodeIs(200);
+        $I->seeInSource('"component":"User\/Login"');
     }
 }

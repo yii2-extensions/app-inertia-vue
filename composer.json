@@ -6,7 +6,8 @@
         "yii2",
         "inertia",
         "vue",
-        "bootstrap5"
+        "tailwindcss",
+        "flowbite"
     ],
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
@@ -15,6 +16,7 @@
         "php": ">=8.1",
         "yii2-framework/inertia": "^0.1",
         "yii2-framework/inertia-vue": "^0.1",
+        "php-forge/foxy": "^0.2",
         "yiisoft/yii2": "^2.0.54|^22",
         "yiisoft/yii2-symfonymailer": "^3.0|^4.0"
     },
@@ -54,6 +56,7 @@
         "allow-plugins": {
             "codeception/c3": true,
             "infection/extension-installer": true,
+            "php-forge/foxy": true,
             "phpstan/extension-installer": true,
             "yiisoft/yii2-composer": true
         }

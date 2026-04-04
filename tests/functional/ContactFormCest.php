@@ -51,6 +51,7 @@ final class ContactFormCest
                     'phone' => '(555) 123-4567',
                     'subject' => 'test subject',
                     'body' => 'test content',
+                    'turnstileToken' => 'test-token',
                 ],
             ],
         );

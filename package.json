@@ -7,12 +7,16 @@
     },
     "dependencies": {
         "@inertiajs/vue3": "^2.0",
-        "@popperjs/core": "^2.11",
-        "bootstrap": "^5.3",
-        "vue": "^3.5"
+        "flowbite": "^3.1",
+        "flowbite-vue": "^0.2",
+        "vue": "^3.5",
+        "vue-turnstile": "^1.0.11"
     },
     "devDependencies": {
+        "@tailwindcss/vite": "^4.0",
         "@vitejs/plugin-vue": "^5.2",
+        "tailwindcss": "^4.0",
         "vite": "^6.3"
-    }
+    },
+    "license": "BSD-3-Clause"
 }

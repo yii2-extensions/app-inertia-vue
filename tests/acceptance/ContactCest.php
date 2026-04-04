@@ -18,6 +18,7 @@ final class ContactCest
     public function contactPageWorks(AcceptanceTester $I): void
     {
         $I->amOnPage(Url::toRoute('/site/contact'));
-        $I->see('Contact');
+        $I->seeResponseCodeIs(200);
+        $I->seeInSource('"component":"Site\/Contact"');
     }
 }
