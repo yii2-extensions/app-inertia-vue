@@ -2,7 +2,7 @@
 extensions:
   enabled:
     - Codeception\Extension\RunProcess:
-        0: php -d variables_order=EGPCS -d memory_limit=-1 -d max_execution_time=0 -S localhost:8080 -t public
+        0: php -d variables_order=EGPCS -d memory_limit=-1 -d max_execution_time=0 -S localhost:8080 -t public public/router.php
         sleep: 2
 modules:
   config:
