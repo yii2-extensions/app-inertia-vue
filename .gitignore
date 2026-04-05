@@ -4,8 +4,14 @@ code_coverage
 # codeception (if present)
 c3.php
 
+# build output
+public/build
+
 # composer
 composer.lock
+
+# database
+*.sqlite
 
 # gitHub copilot config (if present)
 .github/agents/**
