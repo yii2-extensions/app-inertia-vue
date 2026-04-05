@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace app\commands;
 
-use yii\console\Controller;
-use yii\console\ExitCode;
+use yii\console\{Controller, ExitCode};
 
 /**
  * Echoes the first argument that you have entered.
@@ -18,9 +17,9 @@ use yii\console\ExitCode;
 class HelloController extends Controller
 {
     /**
-     * This command echoes what you have entered as the message.
+     * Command echoes what you have entered as the message.
      *
-     * @param string $message The message to be echoed.
+     * @param string $message Message to be echoed.
      *
      * @return int Exit code
      */

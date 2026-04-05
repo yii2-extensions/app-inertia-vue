@@ -25,6 +25,8 @@ class LoginForm extends Model
 
     /**
      * Finds user by [[username]].
+     *
+     * @return User|null User `object`, or `null` if not found.
      */
     public function getUser(): User|null
     {
@@ -37,6 +39,8 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password.
+     *
+     * @return bool Whether the user is logged in successfully.
      */
     public function login(): bool
     {
@@ -54,7 +58,9 @@ class LoginForm extends Model
     }
 
     /**
-     * @phpstan-return array<array<mixed>> The validation rules.
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
      */
     public function rules(): array
     {

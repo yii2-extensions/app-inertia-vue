@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace app\tests\unit\models;
 
-use app\models\SignupForm;
-use app\models\User;
+use app\models\{SignupForm, User};
 use app\tests\support\Fixtures\UserFixture;
 use app\tests\support\UnitTester;
 use RuntimeException;
 use Yii;
-use yii\base\Event;
-use yii\base\ModelEvent;
+use yii\base\{Event, ModelEvent};
 use yii\db\BaseActiveRecord;
-use yii\mail\BaseMailer;
-use yii\mail\MailEvent;
-use yii\mail\MessageInterface;
+use yii\mail\{BaseMailer, MailEvent, MessageInterface};
 
 /**
  * Unit tests for {@see \app\models\SignupForm} model.

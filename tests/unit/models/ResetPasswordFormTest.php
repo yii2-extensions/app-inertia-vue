@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace app\tests\unit\models;
 
-use app\models\ResetPasswordForm;
-use app\models\User;
+use app\models\{ResetPasswordForm, User};
 use app\tests\support\Fixtures\UserFixture;
 use app\tests\support\UnitTester;
 use ReflectionProperty;

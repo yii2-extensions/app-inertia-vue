@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace app\tests\unit\models;
 
-use app\models\User;
-use app\models\VerifyEmailForm;
+use app\models\{User, VerifyEmailForm};
 use app\tests\support\Fixtures\UserFixture;
 use app\tests\support\UnitTester;
 use ReflectionProperty;

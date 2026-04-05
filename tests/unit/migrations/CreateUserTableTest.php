@@ -56,7 +56,6 @@ final class CreateUserTableTest extends \Codeception\Test\Unit
         $schema = $db->schema;
 
         $schema->refresh();
-
         $tableSchema = $schema->getTableSchema('{{%user}}');
 
         self::assertNotNull(

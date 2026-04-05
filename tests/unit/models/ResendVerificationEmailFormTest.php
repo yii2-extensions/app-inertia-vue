@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace app\tests\unit\models;
 
-use app\models\ResendVerificationEmailForm;
-use app\models\User;
+use app\models\{ResendVerificationEmailForm, User};
 use app\tests\support\Fixtures\UserFixture;
 use app\tests\support\UnitTester;
 use RuntimeException;
 use Yii;
-use yii\base\Event;
-use yii\base\ModelEvent;
+use yii\base\{Event, ModelEvent};
 use yii\db\BaseActiveRecord;
 use yii\mail\MessageInterface;
 

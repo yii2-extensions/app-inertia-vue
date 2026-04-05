@@ -19,13 +19,13 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
     public function testSafeDownDeletesAdminUser(): void
     {
         $db = Yii::$app->db;
+
         $migration = new M260403000000CreateAdminUser(['db' => $db]);
 
         $expectedUsername = Yii::$app->params['admin.username'];
 
         $db->createCommand()->delete('{{%user}}', ['username' => $expectedUsername])->execute();
         $migration->up();
-
         $admin = User::find()->where(['username' => $expectedUsername])->one();
 
         verify($admin)
@@ -34,7 +34,6 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
             );
 
         $migration->down();
-
         $admin = User::find()->where(['username' => $expectedUsername])->one();
 
         verify($admin)
@@ -56,7 +55,6 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
         $migration = new M260403000000CreateAdminUser(['db' => $db]);
 
         $migration->up();
-
         $admin = User::find()->where(['username' => $expectedUsername])->one();
 
         self::assertInstanceOf(
@@ -72,6 +70,7 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
                 User::STATUS_ACTIVE,
                 "Failed asserting that 'status' is 'active'.",
             );
+
         $expectedPassword = Yii::$app->params['admin.password'];
 
         verify(Yii::$app->security->validatePassword($expectedPassword, $admin->password_hash))

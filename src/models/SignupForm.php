@@ -15,12 +15,17 @@ use yii\mail\MailerInterface;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
-class SignupForm extends Model
+final class SignupForm extends Model
 {
     public string $email = '';
     public string $password = '';
     public string $username = '';
 
+    /**
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -84,7 +89,11 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
-     * @return bool|null whether the creating new account was successful and email was sent.
+     * @param MailerInterface $mailer Mailer component used to send the email.
+     * @param string $supportEmail Support email address to use as the sender.
+     * @param string $appName Application name to use in the email subject and sender name.
+     *
+     * @return bool Whether the email was sent successfully.
      */
     public function signup(MailerInterface $mailer, string $supportEmail, string $appName): bool|null
     {
@@ -134,6 +143,13 @@ class SignupForm extends Model
 
     /**
      * Sends confirmation email to user.
+     *
+     * @param MailerInterface $mailer Mailer component used to send the email.
+     * @param User $user User to whom the email will be sent.
+     * @param string $supportEmail Support email address to use as the sender.
+     * @param string $appName Application name to use in the email subject and sender name.
+     *
+     * @return bool Whether the email was sent successfully.
      */
     protected function sendEmail(MailerInterface $mailer, User $user, string $supportEmail, string $appName): bool
     {

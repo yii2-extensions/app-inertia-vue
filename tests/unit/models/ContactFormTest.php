@@ -8,6 +8,7 @@ use app\models\ContactForm;
 use app\tests\support\UnitTester;
 use Yii;
 use yii\mail\MessageInterface;
+use yii\symfonymailer\Message;
 
 /**
  * Unit tests for {@see \app\models\ContactForm} model.
@@ -43,11 +44,15 @@ final class ContactFormTest extends \Codeception\Test\Unit
             "Failed asserting that 'contact' email is sent successfully.",
         );
 
-        // using Yii2 module actions to check email was sent
-        self::assertNotNull($this->tester, 'UnitTester must be configured for email assertions.');
+        // using Yii2 module actions to check email was sent.
+        self::assertNotNull(
+            $this->tester,
+            'UnitTester must be configured for email assertions.',
+        );
+
         $this->tester->seeEmailIsSent();
 
-        /** @phpstan-var \yii\symfonymailer\Message $emailMessage */
+        /** @phpstan-var Message $emailMessage */
         $emailMessage = $this->tester->grabLastSentEmail();
 
         verify($emailMessage)

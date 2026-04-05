@@ -36,7 +36,8 @@ final class UserSearchTest extends \Codeception\Test\Unit
 
         $rules = $searchModel->rules();
 
-        verify($rules)->notEmpty();
+        verify($rules)
+            ->notEmpty();
     }
 
     public function testSearchReturnsDataProvider(): void
@@ -45,8 +46,14 @@ final class UserSearchTest extends \Codeception\Test\Unit
 
         $dataProvider = $searchModel->search([]);
 
-        self::assertInstanceOf(ActiveDataProvider::class, $dataProvider);
-        verify($dataProvider->getCount())->greaterThan(0);
+        self::assertInstanceOf(
+            ActiveDataProvider::class,
+            $dataProvider,
+            'Failed asserting that search method returns an instance of ActiveDataProvider.',
+        );
+
+        verify($dataProvider->getCount())
+            ->greaterThan(0);
     }
 
     public function testSearchWithInvalidData(): void
@@ -55,8 +62,14 @@ final class UserSearchTest extends \Codeception\Test\Unit
 
         $dataProvider = $searchModel->search(['UserSearch' => ['id' => 'invalid']]);
 
-        self::assertInstanceOf(ActiveDataProvider::class, $dataProvider);
-        verify($dataProvider->getCount())->equals(0);
+        self::assertInstanceOf(
+            ActiveDataProvider::class,
+            $dataProvider,
+            'Failed asserting that search method returns an instance of ActiveDataProvider.',
+        );
+
+        verify($dataProvider->getCount())
+            ->equals(0);
     }
 
     public function testSearchWithUsernameFilter(): void
@@ -65,7 +78,13 @@ final class UserSearchTest extends \Codeception\Test\Unit
 
         $dataProvider = $searchModel->search(['UserSearch' => ['username' => 'okirlin']]);
 
-        self::assertInstanceOf(ActiveDataProvider::class, $dataProvider);
-        verify($dataProvider->getCount())->equals(1);
+        self::assertInstanceOf(
+            ActiveDataProvider::class,
+            $dataProvider,
+            'Failed asserting that search method returns an instance of ActiveDataProvider.',
+        );
+
+        verify($dataProvider->getCount())
+            ->equals(1);
     }
 }

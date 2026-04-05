@@ -13,10 +13,15 @@ use yii\mail\MailerInterface;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
-class PasswordResetRequestForm extends Model
+final class PasswordResetRequestForm extends Model
 {
     public string $email = '';
 
+    /**
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -44,6 +49,11 @@ class PasswordResetRequestForm extends Model
 
     /**
      * Sends an email with a link, for resetting the password.
+     *
+     * @param MailerInterface $mailer Mailer component used to send the email.
+     * @param string $supportEmail Support email address to use as the sender.
+     *
+     * @return bool Whether the email was sent successfully.
      */
     public function sendEmail(MailerInterface $mailer, string $supportEmail, string $appName): bool
     {

@@ -12,18 +12,39 @@ use yii\data\ActiveDataProvider;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
-class UserSearch extends User
+final class UserSearch extends User
 {
+    /**
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
+     */
     public function rules(): array
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['username', 'email'], 'safe'],
+            [
+                [
+                    'id',
+                    'status',
+                ],
+                'integer',
+            ],
+            [
+                [
+                    'username',
+                    'email',
+                ],
+                'safe',
+            ],
         ];
     }
 
     /**
      * Creates data provider instance with search query applied.
+     *
+     * @param array $params Search parameters to filter the user data.
+     *
+     * @return ActiveDataProvider Data provider containing the filtered user data.
      *
      * @phpstan-param array<string, mixed> $params
      */

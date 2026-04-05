@@ -49,6 +49,8 @@ class ResetPasswordForm extends Model
 
     /**
      * Resets password.
+     *
+     * @return bool Whether the password was reset successfully
      */
     public function resetPassword(): bool
     {
@@ -63,6 +65,11 @@ class ResetPasswordForm extends Model
         return $this->user->save(false);
     }
 
+    /**
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
+     */
     public function rules(): array
     {
         return [

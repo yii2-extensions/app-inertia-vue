@@ -7,9 +7,7 @@ namespace app\tests\unit;
 use app\commands\HelloController;
 use Codeception\Test\Unit;
 use yii\base\InvalidRouteException;
-use yii\console\Application;
-use yii\console\Exception;
-use yii\console\ExitCode;
+use yii\console\{Application, Exception, ExitCode};
 
 use function ob_get_clean;
 use function ob_start;
@@ -35,8 +33,16 @@ final class HelloControllerTest extends Unit
         $exitCode = $helloController->runAction('index', ['custom message']);
         $result = ob_get_clean();
 
-        self::assertSame("custom message\n", $result);
-        self::assertSame(ExitCode::OK, $exitCode);
+        self::assertSame(
+            "custom message\n",
+            $result,
+            'Output should match the custom message provided as an argument.'
+        );
+        self::assertSame(
+            ExitCode::OK,
+            $exitCode,
+            'Exit code should be OK.'
+        );
     }
 
     /**
@@ -52,7 +58,15 @@ final class HelloControllerTest extends Unit
         $exitCode = $helloController->runAction('index');
         $result = ob_get_clean();
 
-        self::assertSame("hello world\n", $result);
-        self::assertSame(ExitCode::OK, $exitCode);
+        self::assertSame(
+            "hello world\n",
+            $result,
+            'Output should match the default message.'
+        );
+        self::assertSame(
+            ExitCode::OK,
+            $exitCode,
+            'Exit code should be OK.'
+        );
     }
 }

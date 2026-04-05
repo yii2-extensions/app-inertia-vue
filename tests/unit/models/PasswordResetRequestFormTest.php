@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace app\tests\unit\models;
 
-use app\models\PasswordResetRequestForm;
-use app\models\User;
+use app\models\{PasswordResetRequestForm, User};
 use app\tests\support\Fixtures\UserFixture;
 use app\tests\support\UnitTester;
 use Yii;
-use yii\base\Event;
-use yii\base\ModelEvent;
+use yii\base\{Event, ModelEvent};
 use yii\db\BaseActiveRecord;
 use yii\mail\MessageInterface;
+use yii\symfonymailer\Message;
 
 /**
  * Unit tests for {@see \app\models\PasswordResetRequestForm} model.
@@ -62,7 +61,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
             "Failed asserting that fixture user 'okirlin' exists.",
         );
 
-        // Set an expired token (timestamp far in the past).
+        // set an expired token (timestamp far in the past).
         $user->password_reset_token = 'expiredtoken_1000000000';
 
         self::assertTrue(
@@ -178,7 +177,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
                 'Failed asserting that email is sent from the support address.',
             );
 
-        /** @phpstan-var \yii\symfonymailer\Message $emailMessage */
+        /** @phpstan-var Message $emailMessage */
         $body = $emailMessage->getSymfonyEmail()->getHtmlBody() . $emailMessage->getSymfonyEmail()->getTextBody();
 
         verify($user->password_reset_token)

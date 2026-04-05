@@ -8,8 +8,7 @@ use app\controllers\UserController;
 use app\models\User;
 use app\tests\support\Fixtures\UserFixture;
 use Yii;
-use yii\web\IdentityInterface;
-use yii\web\Response;
+use yii\web\{IdentityInterface, Response};
 
 /**
  * Unit tests for {@see \app\controllers\UserController} logout action.

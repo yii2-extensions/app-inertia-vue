@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace app\models;
 
-use yii\base\Model;
+use Throwable;
+use Yii;
+use yii\base\{InvalidArgumentException, Model};
 use yii\helpers\Json;
 use yii\mail\MailerInterface;
 
@@ -24,6 +26,8 @@ class ContactForm extends Model
     public string $turnstileToken = '';
 
     /**
+     * @return array Attribute labels for the model properties.
+     *
      * @phpstan-return array<string, string>
      */
     public function attributeLabels(): array
@@ -35,6 +39,8 @@ class ContactForm extends Model
 
     /**
      * Sends an email to the specified email address using the information collected by this model.
+     *
+     * @return bool Whether the email was sent successfully.
      */
     public function contact(MailerInterface $mailer, string $email, string $senderEmail, string $senderName): bool
     {
@@ -54,7 +60,9 @@ class ContactForm extends Model
     }
 
     /**
-     * @phpstan-return array<array<mixed>> The validation rules.
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
      */
     public function rules(): array
     {
@@ -96,19 +104,57 @@ class ContactForm extends Model
             return;
         }
 
-        $secretKey = \Yii::$app->params['turnstile.secretKey'];
+        $secretKey = Yii::$app->params['turnstile.secretKey'];
 
         if ($secretKey === '') {
             if (YII_ENV_TEST) {
                 return;
             }
 
-            \Yii::error('Turnstile secret key is not configured.', __METHOD__);
+            Yii::error(
+                'Turnstile secret key is not configured.',
+                __METHOD__,
+            );
+
             $this->addError($attribute, 'CAPTCHA verification is temporarily unavailable.');
 
             return;
         }
 
+        $response = $this->fetchTurnstileResponse($secretKey);
+
+        if ($response === null) {
+            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
+
+            return;
+        }
+
+        try {
+            /** @var array<string, mixed> $result */
+            $result = Json::decode($response);
+        } catch (InvalidArgumentException) {
+            Yii::warning(
+                'Turnstile response is not valid JSON.',
+                __METHOD__,
+            );
+
+            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
+
+            return;
+        }
+
+        if (($result['success'] ?? false) !== true) {
+            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
+        }
+    }
+
+    /**
+     * Sends the token to Cloudflare Turnstile API for verification.
+     *
+     * @return string|null API response body, or `null` on failure.
+     */
+    protected function fetchTurnstileResponse(string $secretKey): string|null
+    {
         try {
             $response = file_get_contents(
                 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
@@ -125,35 +171,24 @@ class ContactForm extends Model
                     ],
                 ]),
             );
-        } catch (\Throwable $exception) {
-            \Yii::warning(
+        } catch (Throwable $exception) { // @codeCoverageIgnoreStart
+            Yii::warning(
                 sprintf('Turnstile verification request failed: %s', $exception->getMessage()),
                 __METHOD__,
             );
-            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
 
-            return;
-        }
+            return null;
+        } // @codeCoverageIgnoreEnd
 
-        if ($response === false) {
-            \Yii::warning('Turnstile verification request failed.', __METHOD__);
-            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
+        if ($response === false) { // @codeCoverageIgnoreStart
+            Yii::warning(
+                'Turnstile verification request failed.',
+                __METHOD__,
+            );
 
-            return;
-        }
+            return null;
+        } // @codeCoverageIgnoreEnd
 
-        try {
-            /** @var array<string, mixed> $result */
-            $result = Json::decode($response);
-        } catch (\yii\base\InvalidArgumentException) {
-            \Yii::warning('Turnstile response is not valid JSON.', __METHOD__);
-            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
-
-            return;
-        }
-
-        if (($result['success'] ?? false) !== true) {
-            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
-        }
+        return $response;
     }
 }

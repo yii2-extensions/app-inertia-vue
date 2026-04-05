@@ -20,7 +20,7 @@ class VerifyEmailForm extends Model
     /**
      * Creates a form model with given token.
      *
-     * @param string $token The verification token.
+     * @param string $token Verification token.
      * @param array $config name-value pairs that will be used to initialize the object properties.
      *
      * @throws InvalidArgumentException if token is empty or not valid.
@@ -47,7 +47,7 @@ class VerifyEmailForm extends Model
     /**
      * Verifies email.
      *
-     * @return User|null the saved model or `null` if saving fails.
+     * @return User|null Saved model or `null` if saving fails.
      */
     public function verifyEmail(): User|null
     {

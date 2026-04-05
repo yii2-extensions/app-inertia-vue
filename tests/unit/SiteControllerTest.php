@@ -7,8 +7,7 @@ namespace app\tests\unit;
 use app\controllers\SiteController;
 use app\tests\support\Fixtures\UserFixture;
 use Yii;
-use yii\web\HttpException;
-use yii\web\Response;
+use yii\web\{HttpException, Response};
 
 /**
  * Unit tests for {@see SiteController} error and contact actions.
@@ -39,11 +38,15 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
-        Yii::$app->controller = $controller;
 
+        Yii::$app->controller = $controller;
         $response = $controller->actionContact();
 
-        self::assertInstanceOf(Response::class, $response);
+        self::assertInstanceOf(
+            Response::class,
+            $response,
+            "Expected 'actionContact' to return an instance of Response for 'GET' request.",
+        );
     }
 
     public function testActionErrorWithGenericException(): void
@@ -52,13 +55,16 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         $_SERVER['SERVER_NAME'] = 'localhost';
 
         $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
+
         Yii::$app->controller = $controller;
-
         Yii::$app->errorHandler->exception = new \RuntimeException('Something went wrong');
-
         $response = $controller->actionError();
 
-        self::assertInstanceOf(Response::class, $response);
+        self::assertInstanceOf(
+            Response::class,
+            $response,
+            "Expected 'actionError' to return an instance of Response for generic exception.",
+        );
     }
 
     public function testActionErrorWithHttpException(): void
@@ -67,13 +73,16 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         $_SERVER['SERVER_NAME'] = 'localhost';
 
         $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
+
         Yii::$app->controller = $controller;
-
         Yii::$app->errorHandler->exception = new HttpException(404, 'Page not found');
-
         $response = $controller->actionError();
 
-        self::assertInstanceOf(Response::class, $response);
+        self::assertInstanceOf(
+            Response::class,
+            $response,
+            "Expected 'actionError' to return an instance of Response for HTTP exception.",
+        );
     }
 
     public function testActionIndex(): void
@@ -82,10 +91,14 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         $_SERVER['SERVER_NAME'] = 'localhost';
 
         $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
-        Yii::$app->controller = $controller;
 
+        Yii::$app->controller = $controller;
         $response = $controller->actionIndex();
 
-        self::assertInstanceOf(Response::class, $response);
+        self::assertInstanceOf(
+            Response::class,
+            $response,
+            "Expected 'actionIndex' to return an instance of Response.",
+        );
     }
 }

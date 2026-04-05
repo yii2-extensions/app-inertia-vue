@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace app\controllers;
 
 use app\models\ContactForm;
+use Throwable;
 use Yii;
 use yii\inertia\web\Controller;
 use yii\mail\MailerInterface;
-use yii\web\HttpException;
-use yii\web\Response;
+use yii\web\{HttpException, Response};
 
 /**
  * Handles site pages: home, about, contact, and error actions.
@@ -17,7 +17,7 @@ use yii\web\Response;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
-class SiteController extends Controller
+final class SiteController extends Controller
 {
     public function __construct(
         $id,
@@ -30,14 +30,20 @@ class SiteController extends Controller
 
     /**
      * Displays about page.
+     *
+     * @return Response Response object containing the rendered about page.
      */
     public function actionAbout(): Response
     {
-        return $this->inertia('Site/About');
+        return $this->inertia(
+            'Site/About',
+        );
     }
 
     /**
      * Displays contact page.
+     *
+     * @return Response Response object containing the rendered contact page.
      */
     public function actionContact(): Response
     {
@@ -70,18 +76,22 @@ class SiteController extends Controller
             return $this->redirect(['site/contact']);
         }
 
-        return $this->inertia('Site/Contact');
+        return $this->inertia(
+            'Site/Contact',
+        );
     }
 
     /**
      * Displays error page.
+     *
+     * @return Response Response object containing the rendered error page.
      */
     public function actionError(): Response
     {
         $exception = Yii::$app->errorHandler->exception;
 
         $statusCode = $exception instanceof HttpException ? $exception->statusCode : 500;
-        $message = (YII_DEBUG && $exception instanceof \Throwable)
+        $message = (YII_DEBUG && $exception instanceof Throwable)
             ? $exception->getMessage()
             : 'An internal server error occurred.';
 
@@ -96,9 +106,13 @@ class SiteController extends Controller
 
     /**
      * Displays homepage.
+     *
+     * @return Response Response object containing the rendered homepage.
      */
     public function actionIndex(): Response
     {
-        return $this->inertia('Site/Index');
+        return $this->inertia(
+            'Site/Index',
+        );
     }
 }

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace app\tests\unit;
 
-use app\controllers\SiteController;
-use app\controllers\UserController;
+use app\controllers\{SiteController, UserController};
 use app\tests\support\Fixtures\UserFixture;
 use Yii;
 use yii\web\Response;

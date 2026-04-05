@@ -15,10 +15,15 @@ use yii\mail\MailerInterface;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
-class ResendVerificationEmailForm extends Model
+final class ResendVerificationEmailForm extends Model
 {
     public string $email = '';
 
+    /**
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -46,6 +51,12 @@ class ResendVerificationEmailForm extends Model
 
     /**
      * Sends confirmation email to user.
+     *
+     * @param MailerInterface $mailer Mailer component used to send the email.
+     * @param string $supportEmail Support email address to use as the sender.
+     * @param string $appName Application name to use in the email subject and sender name.
+     *
+     * @return bool Whether the email was sent successfully.
      */
     public function sendEmail(MailerInterface $mailer, string $supportEmail, string $appName): bool
     {
@@ -94,7 +105,10 @@ class ResendVerificationEmailForm extends Model
                 $transaction->rollBack();
             }
 
-            Yii::error($e->getMessage(), __METHOD__);
+            Yii::error(
+                $e->getMessage(),
+                __METHOD__,
+            );
 
             return false;
         }

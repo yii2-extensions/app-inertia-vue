@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\models\LoginForm;
-use app\models\PasswordResetRequestForm;
-use app\models\ResendVerificationEmailForm;
-use app\models\ResetPasswordForm;
-use app\models\SignupForm;
-use app\models\User;
-use app\models\UserSearch;
-use app\models\VerifyEmailForm;
+use app\models\{
+    LoginForm,
+    PasswordResetRequestForm,
+    ResendVerificationEmailForm,
+    ResetPasswordForm,
+    SignupForm,
+    User,
+    UserSearch,
+    VerifyEmailForm,
+};
 use Yii;
 use yii\base\InvalidArgumentException;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
+use yii\filters\{AccessControl, VerbFilter};
 use yii\inertia\web\Controller;
 use yii\mail\MailerInterface;
-use yii\web\BadRequestHttpException;
-use yii\web\Response;
+use yii\web\{BadRequestHttpException, Response};
 
 /**
  * Handles user-related actions: login, logout, signup, password recovery, email verification, and user listing.
@@ -27,7 +27,7 @@ use yii\web\Response;
  * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
-class UserController extends Controller
+final class UserController extends Controller
 {
     public function __construct(
         $id,
@@ -40,6 +40,8 @@ class UserController extends Controller
 
     /**
      * Displays user list.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionIndex(): Response
     {
@@ -47,6 +49,7 @@ class UserController extends Controller
 
         /** @phpstan-var array<string, mixed> $queryParams */
         $queryParams = Yii::$app->request->queryParams;
+
         $dataProvider = $searchModel->search($queryParams);
 
         /** @var User[] $models */
@@ -69,7 +72,11 @@ class UserController extends Controller
         return $this->inertia(
             'User/Index',
             [
-                'users' => $users,
+                'filters' => [
+                    'username' => $searchModel->username,
+                    'email' => $searchModel->email,
+                    'status' => $searchModel->status,
+                ],
                 'pagination' => [
                     'totalCount' => $dataProvider->getTotalCount(),
                     'pageSize' => $pagination !== false ? $pagination->getPageSize() : 10,
@@ -79,17 +86,15 @@ class UserController extends Controller
                 'sort' => [
                     'attributes' => $sort instanceof \yii\data\Sort ? $sort->getAttributeOrders() : [],
                 ],
-                'filters' => [
-                    'username' => $searchModel->username,
-                    'email' => $searchModel->email,
-                    'status' => $searchModel->status,
-                ],
+                'users' => $users,
             ],
         );
     }
 
     /**
      * Login action.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionLogin(): Response
     {
@@ -113,6 +118,8 @@ class UserController extends Controller
 
     /**
      * Logout action.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionLogout(): Response
     {
@@ -123,6 +130,8 @@ class UserController extends Controller
 
     /**
      * Requests password reset.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionRequestPasswordReset(): Response
     {
@@ -165,6 +174,8 @@ class UserController extends Controller
 
     /**
      * Resends verification email.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionResendVerificationEmail(): Response
     {
@@ -211,7 +222,9 @@ class UserController extends Controller
     /**
      * Resets password.
      *
-     * @throws BadRequestHttpException
+     * @throws BadRequestHttpException if the token is invalid.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionResetPassword(string $token): Response
     {
@@ -244,6 +257,8 @@ class UserController extends Controller
 
     /**
      * Signs user up.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionSignup(): Response
     {
@@ -281,7 +296,9 @@ class UserController extends Controller
     /**
      * Verifies email address.
      *
-     * @throws BadRequestHttpException
+     * @throws BadRequestHttpException if the token is invalid.
+     *
+     * @return Response Response object containing the rendered result of the action.
      */
     public function actionVerifyEmail(string $token): Response
     {

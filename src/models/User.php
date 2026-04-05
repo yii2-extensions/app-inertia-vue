@@ -43,6 +43,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by password reset token.
+     *
+     * @param string $token Password reset token to be looked for.
+     *
+     * @return self|null User corresponding to the provided password reset token, or `null` if no such user exists or
+     * the token is invalid.
      */
     public static function findByPasswordResetToken(string $token): self|null
     {
@@ -60,6 +65,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by username.
+     *
+     * @param string $username Username to be looked for.
+     *
+     * @return self|null User corresponding to the provided username, or `null` if no such user exists or the user is
+     * not active.
      */
     public static function findByUsername(string $username): self|null
     {
@@ -73,6 +83,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by verification email token.
+     *
+     * @param string $token Verification email token to be looked for.
+     *
+     * @return self|null User corresponding to the provided verification email token, or `null` if no such user exists
+     * or the token is invalid.
      */
     public static function findByVerificationToken(string $token): self|null
     {
@@ -90,6 +105,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds an identity by the given ID.
+     *
+     * @param int|string $id ID to be looked for.
+     *
+     * @return self|null User corresponding to the provided ID, or `null` if no such user exists or the user is not
+     * active.
      */
     public static function findIdentity($id): self|null
     {
@@ -152,6 +172,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Checks if password reset token is valid.
+     *
+     * @param string|null $token Token to be validated.
+     *
+     * @return bool `true` if the token is valid, `false` otherwise.
+
      */
     public static function isPasswordResetTokenValid(string|null $token): bool
     {
@@ -160,6 +185,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Checks if verification email token is valid.
+     *
+     * @param string|null $token Token to be validated.
+     *
+     * @return bool `true` if the token is valid, `false` otherwise.
      */
     public static function isVerificationTokenValid(string|null $token): bool
     {
@@ -174,6 +203,11 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    /**
+     * @return array Validation rules for the model properties.
+     *
+     * @phpstan-return array<array<mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -196,12 +230,17 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates password hash from password and sets it to the model.
+     *
+     * @param string $password Password to be hashed and set.
      */
     public function setPassword(string $password): void
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
+    /**
+     * @return string Name of the database table associated with this ActiveRecord class.
+     */
     public static function tableName(): string
     {
         return '{{%user}}';
@@ -209,6 +248,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Validates auth key.
+     *
+     * @param string $authKey Auth key to be validated.
+     *
+     * @return bool `true` if the auth key is valid, `false` otherwise.
      */
     public function validateAuthKey($authKey): bool
     {
@@ -217,6 +260,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Validates password.
+     *
+     * @param string $password Password to be validated.
+     *
+     * @return bool `true` if the password is valid, `false` otherwise.
      */
     public function validatePassword(string $password): bool
     {
@@ -225,6 +272,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Validates a timestamped token against a configurable expiration period.
+     *
+     * @param string|null $token Token to be validated.
+     * @param string $paramKey Application parameter name that specifies the token expiration period.
+     * @param int $defaultExpire Default expiration period in seconds, used if the application parameter is not set.
+     *
+     * @return bool `true` if the token is valid, `false` otherwise.
      */
     private static function isTokenValid(string|null $token, string $paramKey, int $defaultExpire): bool
     {
