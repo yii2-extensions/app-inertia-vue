@@ -14,6 +14,18 @@ use app\models\ContactForm;
  */
 final class ContactFormValidateTurnstileTest extends \Codeception\Test\Unit
 {
+    public function testValidateTurnstileSkipsWhenModelHasErrors(): void
+    {
+        $model = new ContactForm();
+        $model->addError('name', 'Name is required.');
+        $model->turnstileToken = 'test-token';
+
+        $model->validateTurnstile('turnstileToken', null);
+
+        verify($model->hasErrors('turnstileToken'))->false(
+            'Turnstile validation should be skipped when model already has errors.',
+        );
+    }
     public function testValidateTurnstileSkipsWhenSecretKeyIsEmptyInTestEnv(): void
     {
         $model = new ContactForm();
@@ -31,17 +43,22 @@ final class ContactFormValidateTurnstileTest extends \Codeception\Test\Unit
         );
     }
 
-    public function testValidateTurnstileSkipsWhenModelHasErrors(): void
+    public function testValidateTurnstileWithInvalidJsonResponse(): void
     {
+        $originalKey = \Yii::$app->params['turnstile.secretKey'];
+        \Yii::$app->params['turnstile.secretKey'] = '2x0000000000000000000000000000000AA';
+
         $model = new ContactForm();
-        $model->addError('name', 'Name is required.');
-        $model->turnstileToken = 'test-token';
+        $model->turnstileToken = 'invalid-token';
 
         $model->validateTurnstile('turnstileToken', null);
 
-        verify($model->hasErrors('turnstileToken'))->false(
-            'Turnstile validation should be skipped when model already has errors.',
+        // With the "always fail" test key, Turnstile returns success: false.
+        verify($model->hasErrors('turnstileToken'))->true(
+            'Turnstile validation should fail with always-fail test secret key.',
         );
+
+        \Yii::$app->params['turnstile.secretKey'] = $originalKey;
     }
 
     public function testValidateTurnstileWithTestKeysCallsCloudflare(): void
@@ -57,24 +74,6 @@ final class ContactFormValidateTurnstileTest extends \Codeception\Test\Unit
         // Cloudflare test secret key always returns success for any token.
         verify($model->hasErrors('turnstileToken'))->false(
             'Turnstile validation should pass with Cloudflare test secret key.',
-        );
-
-        \Yii::$app->params['turnstile.secretKey'] = $originalKey;
-    }
-
-    public function testValidateTurnstileWithInvalidJsonResponse(): void
-    {
-        $originalKey = \Yii::$app->params['turnstile.secretKey'];
-        \Yii::$app->params['turnstile.secretKey'] = '2x0000000000000000000000000000000AA';
-
-        $model = new ContactForm();
-        $model->turnstileToken = 'invalid-token';
-
-        $model->validateTurnstile('turnstileToken', null);
-
-        // With the "always fail" test key, Turnstile returns success: false.
-        verify($model->hasErrors('turnstileToken'))->true(
-            'Turnstile validation should fail with always-fail test secret key.',
         );
 
         \Yii::$app->params['turnstile.secretKey'] = $originalKey;

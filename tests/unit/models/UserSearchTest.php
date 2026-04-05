@@ -30,6 +30,15 @@ final class UserSearchTest extends \Codeception\Test\Unit
         ];
     }
 
+    public function testRulesReturnArray(): void
+    {
+        $searchModel = new UserSearch();
+
+        $rules = $searchModel->rules();
+
+        verify($rules)->notEmpty();
+    }
+
     public function testSearchReturnsDataProvider(): void
     {
         $searchModel = new UserSearch();
@@ -38,16 +47,6 @@ final class UserSearchTest extends \Codeception\Test\Unit
 
         self::assertInstanceOf(ActiveDataProvider::class, $dataProvider);
         verify($dataProvider->getCount())->greaterThan(0);
-    }
-
-    public function testSearchWithUsernameFilter(): void
-    {
-        $searchModel = new UserSearch();
-
-        $dataProvider = $searchModel->search(['UserSearch' => ['username' => 'okirlin']]);
-
-        self::assertInstanceOf(ActiveDataProvider::class, $dataProvider);
-        verify($dataProvider->getCount())->equals(1);
     }
 
     public function testSearchWithInvalidData(): void
@@ -60,12 +59,13 @@ final class UserSearchTest extends \Codeception\Test\Unit
         verify($dataProvider->getCount())->equals(0);
     }
 
-    public function testRulesReturnArray(): void
+    public function testSearchWithUsernameFilter(): void
     {
         $searchModel = new UserSearch();
 
-        $rules = $searchModel->rules();
+        $dataProvider = $searchModel->search(['UserSearch' => ['username' => 'okirlin']]);
 
-        verify($rules)->notEmpty();
+        self::assertInstanceOf(ActiveDataProvider::class, $dataProvider);
+        verify($dataProvider->getCount())->equals(1);
     }
 }

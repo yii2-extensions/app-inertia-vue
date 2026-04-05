@@ -32,17 +32,16 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         ];
     }
 
-    public function testActionErrorWithHttpException(): void
+    public function testActionContactGet(): void
     {
-        $_SERVER['REQUEST_URI'] = '/site/error';
+        $_SERVER['REQUEST_URI'] = '/site/contact';
         $_SERVER['SERVER_NAME'] = 'localhost';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
         Yii::$app->controller = $controller;
 
-        Yii::$app->errorHandler->exception = new HttpException(404, 'Page not found');
-
-        $response = $controller->actionError();
+        $response = $controller->actionContact();
 
         self::assertInstanceOf(Response::class, $response);
     }
@@ -62,6 +61,21 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         self::assertInstanceOf(Response::class, $response);
     }
 
+    public function testActionErrorWithHttpException(): void
+    {
+        $_SERVER['REQUEST_URI'] = '/site/error';
+        $_SERVER['SERVER_NAME'] = 'localhost';
+
+        $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
+        Yii::$app->controller = $controller;
+
+        Yii::$app->errorHandler->exception = new HttpException(404, 'Page not found');
+
+        $response = $controller->actionError();
+
+        self::assertInstanceOf(Response::class, $response);
+    }
+
     public function testActionIndex(): void
     {
         $_SERVER['REQUEST_URI'] = '/';
@@ -71,20 +85,6 @@ final class SiteControllerTest extends \Codeception\Test\Unit
         Yii::$app->controller = $controller;
 
         $response = $controller->actionIndex();
-
-        self::assertInstanceOf(Response::class, $response);
-    }
-
-    public function testActionContactGet(): void
-    {
-        $_SERVER['REQUEST_URI'] = '/site/contact';
-        $_SERVER['SERVER_NAME'] = 'localhost';
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-
-        $controller = new SiteController('site', Yii::$app, Yii::$app->mailer);
-        Yii::$app->controller = $controller;
-
-        $response = $controller->actionContact();
 
         self::assertInstanceOf(Response::class, $response);
     }
