@@ -52,26 +52,31 @@ final class SiteController extends Controller
         /** @phpstan-var array<string, mixed> $post */
         $post = $this->request->post();
 
-        $params = Yii::$app->params;
+        if ($model->load($post)) {
+            $params = Yii::$app->params;
 
-        $contact = $model->load($post) && $model->contact(
-            $this->mailer,
-            $params['adminEmail'],
-            $params['senderEmail'],
-            $params['senderName'],
-        );
+            if ($model->contact(
+                $this->mailer,
+                $params['adminEmail'],
+                $params['senderEmail'],
+                $params['senderName'],
+            )) {
+                Yii::$app->session->setFlash(
+                    'success',
+                    'Thank you for contacting us. We will respond to you as soon as possible.',
+                );
 
-        if ($contact) {
-            Yii::$app->session->setFlash(
-                'success',
-                'Thank you for contacting us. We will respond to you as soon as possible.',
-            );
+                return $this->redirect(['site/contact']);
+            }
 
-            return $this->redirect(['site/contact']);
-        }
-
-        if ($this->request->isPost && $model->hasErrors()) {
-            Yii::$app->session->setFlash('errors', $model->getErrors());
+            if ($model->hasErrors()) {
+                Yii::$app->session->setFlash('errors', $model->getErrors());
+            } else {
+                Yii::$app->session->setFlash(
+                    'error',
+                    'Sorry, we are unable to send your message at this time.',
+                );
+            }
 
             return $this->redirect(['site/contact']);
         }

@@ -10,7 +10,7 @@ use app\tests\support\UnitTester;
 use Yii;
 use yii\base\{Event, ModelEvent};
 use yii\db\BaseActiveRecord;
-use yii\mail\MessageInterface;
+use yii\mail\{BaseMailer, MailEvent, MessageInterface};
 use yii\symfonymailer\Message;
 
 /**
@@ -128,6 +128,53 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         } finally {
             Event::off(User::class, BaseActiveRecord::EVENT_BEFORE_UPDATE, $handler);
         }
+    }
+
+    public function testSendEmailRollsBackRegeneratedTokenWhenMailerFails(): void
+    {
+        $user = User::findByUsername('okirlin');
+
+        self::assertInstanceOf(
+            User::class,
+            $user,
+            "Failed asserting that fixture user 'okirlin' exists.",
+        );
+
+        $user->password_reset_token = 'expiredtoken_1000000000';
+
+        self::assertTrue(
+            $user->save(false),
+            "Failed asserting that the 'expired token' was persisted.",
+        );
+
+        $handler = static function (MailEvent $event): void {
+            $event->isValid = false;
+        };
+
+        Yii::$app->mailer->on(BaseMailer::EVENT_BEFORE_SEND, $handler);
+
+        $model = new PasswordResetRequestForm();
+
+        $model->email = $user->email;
+
+        $supportEmail = Yii::$app->params['supportEmail'];
+
+        try {
+            verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
+                ->false(
+                    "Failed asserting that sendEmail returns 'false' when mail sending fails.",
+                );
+        } finally {
+            Yii::$app->mailer->off(BaseMailer::EVENT_BEFORE_SEND, $handler);
+        }
+
+        $user->refresh();
+
+        verify($user->password_reset_token)
+            ->equals(
+                'expiredtoken_1000000000',
+                'Failed asserting that the regenerated token was rolled back when email sending fails.',
+            );
     }
 
     public function testSendEmailSuccessfully(): void
