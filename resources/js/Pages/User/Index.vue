@@ -248,6 +248,7 @@ const getStatus = (status) =>
                                             <input
                                                 v-model="filterUsername"
                                                 type="text"
+                                                aria-label="Filter users by username"
                                                 class="w-full text-xs px-2 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500/25 outline-none"
                                                 placeholder="Filter..."
                                             />
@@ -258,6 +259,7 @@ const getStatus = (status) =>
                                             <input
                                                 v-model="filterEmail"
                                                 type="text"
+                                                aria-label="Filter users by email"
                                                 class="w-full text-xs px-2 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500/25 outline-none"
                                                 placeholder="Filter..."
                                             />
@@ -267,6 +269,7 @@ const getStatus = (status) =>
                                         >
                                             <select
                                                 v-model="filterStatus"
+                                                aria-label="Filter users by status"
                                                 class="w-full text-xs px-2 py-1.5 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500/25 outline-none"
                                             >
                                                 <option value="">All</option>

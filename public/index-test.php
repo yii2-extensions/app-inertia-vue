@@ -3,8 +3,11 @@
 declare(strict_types=1);
 
 // NOTE: Make sure this file is not accessible when deployed to production
-if (!in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)) {
-    die('You are not allowed to access this file.');
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '';
+
+if (!in_array($clientIp, ['127.0.0.1', '::1'], true)) {
+    http_response_code(403);
+    exit('Forbidden');
 }
 
 defined('YII_DEBUG') || define('YII_DEBUG', true);

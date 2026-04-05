@@ -29,7 +29,9 @@ class VerifyEmailForm extends Model
      */
     public function __construct(string $token, array $config = [])
     {
-        if (trim($token) === '') {
+        $token = trim($token);
+
+        if ($token === '') {
             throw new InvalidArgumentException('Verify email token cannot be blank.');
         }
 

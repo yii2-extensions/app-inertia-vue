@@ -18,6 +18,7 @@ watch(
     () => page.props.flash,
     (flash) => {
         if (!flash || typeof flash !== "object") {
+            alerts.value = [];
             return;
         }
 

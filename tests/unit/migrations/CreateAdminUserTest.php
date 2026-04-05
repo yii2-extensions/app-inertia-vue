@@ -21,23 +21,26 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
         $db = Yii::$app->db;
         $migration = new M260403000000CreateAdminUser(['db' => $db]);
 
-        $db->createCommand()->delete('{{%user}}', ['username' => 'admin'])->execute();
+        /** @phpstan-var string $expectedUsername */
+        $expectedUsername = Yii::$app->params['admin.username'] ?? 'admin';
+
+        $db->createCommand()->delete('{{%user}}', ['username' => $expectedUsername])->execute();
         $migration->up();
 
-        $admin = User::find()->where(['username' => 'admin'])->one();
+        $admin = User::find()->where(['username' => $expectedUsername])->one();
 
         verify($admin)
             ->notNull(
-                "Failed asserting that 'admin' user exists after 'safeUp'.",
+                "Failed asserting that admin user exists after 'safeUp'.",
             );
 
         $migration->down();
 
-        $admin = User::find()->where(['username' => 'admin'])->one();
+        $admin = User::find()->where(['username' => $expectedUsername])->one();
 
         verify($admin)
             ->null(
-                "Failed asserting that 'admin' user is deleted after 'safeDown'.",
+                "Failed asserting that admin user is deleted after 'safeDown'.",
             );
     }
 
@@ -45,35 +48,32 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
     {
         $db = Yii::$app->db;
 
+        /** @phpstan-var string $expectedUsername */
+        $expectedUsername = Yii::$app->params['admin.username'] ?? 'admin';
+        /** @phpstan-var string $expectedEmail */
+        $expectedEmail = Yii::$app->params['admin.email'] ?? 'admin@example.com';
+
         // clean up if admin already exists from fixtures.
-        $db->createCommand()->delete('{{%user}}', ['username' => 'admin'])->execute();
+        $db->createCommand()->delete('{{%user}}', ['username' => $expectedUsername])->execute();
 
         $migration = new M260403000000CreateAdminUser(['db' => $db]);
 
         $migration->up();
 
-        $admin = User::find()->where(['username' => 'admin'])->one();
+        $admin = User::find()->where(['username' => $expectedUsername])->one();
 
         self::assertInstanceOf(
             User::class,
             $admin,
-            "Failed asserting that fixture user 'admin' exists.",
+            'Failed asserting that admin user exists.',
         );
 
         verify($admin)
             ->notNull(
-                "Failed asserting that 'admin' user exists after 'safeUp'.",
+                "Failed asserting that admin user exists after 'safeUp'.",
             );
-        verify($admin->username)
-            ->equals(
-                'admin',
-                "Failed asserting that 'username' is 'admin'.",
-            );
-        verify($admin->email)
-            ->equals(
-                'admin@example.com',
-                "Failed asserting that 'email' is 'admin@example.com'.",
-            );
+        verify($admin->username)->equals($expectedUsername);
+        verify($admin->email)->equals($expectedEmail);
         verify($admin->status)
             ->equals(
                 User::STATUS_ACTIVE,

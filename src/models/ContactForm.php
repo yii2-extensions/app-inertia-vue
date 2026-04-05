@@ -109,17 +109,31 @@ class ContactForm extends Model
             return;
         }
 
-        $response = file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, stream_context_create([
-            'http' => [
-                'method' => 'POST',
-                'header' => 'Content-Type: application/x-www-form-urlencoded',
-                'timeout' => 5,
-                'content' => http_build_query([
-                    'secret' => $secretKey,
-                    'response' => $this->turnstileToken,
+        try {
+            $response = file_get_contents(
+                'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+                false,
+                stream_context_create([
+                    'http' => [
+                        'method' => 'POST',
+                        'header' => 'Content-Type: application/x-www-form-urlencoded',
+                        'timeout' => 5,
+                        'content' => http_build_query([
+                            'secret' => $secretKey,
+                            'response' => $this->turnstileToken,
+                        ]),
+                    ],
                 ]),
-            ],
-        ]));
+            );
+        } catch (\Throwable $exception) {
+            \Yii::warning(
+                sprintf('Turnstile verification request failed: %s', $exception->getMessage()),
+                __METHOD__,
+            );
+            $this->addError($attribute, 'CAPTCHA verification failed. Please try again.');
+
+            return;
+        }
 
         if ($response === false) {
             \Yii::warning('Turnstile verification request failed.', __METHOD__);
