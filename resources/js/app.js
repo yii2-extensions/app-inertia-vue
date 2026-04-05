@@ -12,15 +12,19 @@ if (!appEl || !payloadEl?.textContent) {
 
 const pageData = JSON.parse(payloadEl.textContent);
 
-// Include Yii2 CSRF token in all Inertia requests via X-CSRF-Token header.
-router.on("before", (event) => {
-  const token = document
-    .querySelector('meta[name="csrf-token"]')
-    ?.getAttribute("content");
+// Include X-CSRF-Token in every Inertia request.
+// The server uses validateCsrfHeaderOnly=true: it only checks that the
+// header is present (not its value).  CORS prevents cross-origin JS from
+// setting custom headers, so presence alone proves same-origin.
+// Fallback "1" handles the case where getCsrfToken() returns null under
+// validateCsrfHeaderOnly mode.
+const csrfToken =
+    pageData?.props?.csrf?.token ||
+    document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
+    "1";
 
-  if (token) {
-    event.detail.visit.headers["X-CSRF-Token"] = token;
-  }
+router.on("before", (event) => {
+    event.detail.visit.headers["X-CSRF-Token"] = csrfToken;
 });
 
 createInertiaApp({

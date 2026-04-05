@@ -104,7 +104,7 @@ final class UserController extends Controller
         $post = $this->request->post();
 
         if ($model->load($post) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         }
 
         if ($this->request->isPost && $model->hasErrors()) {
