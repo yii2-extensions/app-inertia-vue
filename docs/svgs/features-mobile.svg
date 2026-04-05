@@ -1,5 +1,4 @@
-<!-- Versión móvil - Una sola columna -->
-<svg fill="none" viewBox="0 0 600 580" width="100%" height="580" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" viewBox="0 0 560 560" width="100%" height="560" xmlns="http://www.w3.org/2000/svg">
     <foreignObject width="100%" height="100%">
         <div xmlns="http://www.w3.org/1999/xhtml">
             <style>
@@ -46,28 +45,28 @@
             </style>
             <div class="container">
                 <div class="alert-box">
-                    <p class="alert-title"><strong>Best Practices</strong></p>
-                    <p class="alert-content">PSR standards • Clean code • Documentation ready</p>
+                    <p class="alert-title"><strong>Authentication</strong></p>
+                    <p class="alert-content">Login • Signup • Email verification • Password reset • User listing</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>Easy Setup</strong></p>
-                    <p class="alert-content">Quick start template • Configuration examples • Clear structure</p>
+                    <p class="alert-title"><strong>Cloudflare Turnstile</strong></p>
+                    <p class="alert-content">CAPTCHA on contact form • Test keys included • Auto dark theme</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>GitHub Actions</strong></p>
-                    <p class="alert-content">CI/CD workflows • Automated testing • Quality checks</p>
+                    <p class="alert-title"><strong>Inertia.js + Vue 3</strong></p>
+                    <p class="alert-content">SPA navigation • Composition API • Script setup • No full page reloads</p>
+                </div>
+                <div class="alert-box">
+                    <p class="alert-title"><strong>PHP 8.2+ / Vite</strong></p>
+                    <p class="alert-content">Typed properties • Strict types • HMR • Asset bundling via Vite</p>
                 </div>
                 <div class="alert-box">
                     <p class="alert-title"><strong>Quality Tools</strong></p>
-                    <p class="alert-content">PHPStan Level Max • StyleCI • Super-Linter integration</p>
+                    <p class="alert-content">PHPStan Level Max • Super-Linter • ECS • Codeception tests</p>
                 </div>
                 <div class="alert-box">
-                    <p class="alert-title"><strong>PHP 8.1+</strong></p>
-                    <p class="alert-content">Modern PHP features • Type safety • Performance optimizations</p>
-                </div>
-                <div class="alert-box">
-                    <p class="alert-title"><strong>Testing Ready</strong></p>
-                    <p class="alert-content">PHPUnit setup • Mutation testing • Codecov integration</p>
+                    <p class="alert-title"><strong>Tailwind CSS v4 + Flowbite</strong></p>
+                    <p class="alert-content">Utility-first CSS • Flowbite Vue components • Dark mode toggle</p>
                 </div>
             </div>
         </div>
