@@ -51,24 +51,39 @@ final class ContactFormValidateTurnstileTest extends \Codeception\Test\Unit
             );
     }
 
-    public function testValidateTurnstileWithSuccessResponse(): void
+    public function testValidateTurnstileWithCloudflareFailKeys(): void
     {
         $originalKey = Yii::$app->params['turnstile.secretKey'];
-        Yii::$app->params['turnstile.secretKey'] = 'test-secret';
+        Yii::$app->params['turnstile.secretKey'] = '2x0000000000000000000000000000000AA';
 
-        $model = Stub::construct(
-            ContactForm::class,
-            [],
-            ['fetchTurnstileResponse' => '{"success": true}'],
-        );
+        $model = new ContactForm();
 
-        $model->turnstileToken = 'valid-token';
+        $model->turnstileToken = 'test-token';
+
+        $model->validateTurnstile('turnstileToken', null);
+
+        verify($model->hasErrors('turnstileToken'))
+            ->true(
+                'Turnstile validation should fail with Cloudflare always-fail test key.',
+            );
+
+        Yii::$app->params['turnstile.secretKey'] = $originalKey;
+    }
+
+    public function testValidateTurnstileWithCloudflareTestKeys(): void
+    {
+        $originalKey = Yii::$app->params['turnstile.secretKey'];
+        Yii::$app->params['turnstile.secretKey'] = '1x0000000000000000000000000000000AA';
+
+        $model = new ContactForm();
+
+        $model->turnstileToken = 'test-token';
 
         $model->validateTurnstile('turnstileToken', null);
 
         verify($model->hasErrors('turnstileToken'))
             ->false(
-                'Turnstile validation should pass when API returns success.',
+                'Turnstile validation should pass with Cloudflare always-pass test key.',
             );
 
         Yii::$app->params['turnstile.secretKey'] = $originalKey;
@@ -97,29 +112,6 @@ final class ContactFormValidateTurnstileTest extends \Codeception\Test\Unit
         Yii::$app->params['turnstile.secretKey'] = $originalKey;
     }
 
-    public function testValidateTurnstileWithNullResponse(): void
-    {
-        $originalKey = Yii::$app->params['turnstile.secretKey'];
-        Yii::$app->params['turnstile.secretKey'] = 'test-secret';
-
-        $model = Stub::construct(
-            ContactForm::class,
-            [],
-            ['fetchTurnstileResponse' => null],
-        );
-
-        $model->turnstileToken = 'some-token';
-
-        $model->validateTurnstile('turnstileToken', null);
-
-        verify($model->hasErrors('turnstileToken'))
-            ->true(
-                'Turnstile validation should fail when HTTP request returns null.',
-            );
-
-        Yii::$app->params['turnstile.secretKey'] = $originalKey;
-    }
-
     public function testValidateTurnstileWithInvalidJsonResponse(): void
     {
         $originalKey = Yii::$app->params['turnstile.secretKey'];
@@ -143,39 +135,47 @@ final class ContactFormValidateTurnstileTest extends \Codeception\Test\Unit
         Yii::$app->params['turnstile.secretKey'] = $originalKey;
     }
 
-    public function testValidateTurnstileWithCloudflareTestKeys(): void
+    public function testValidateTurnstileWithNullResponse(): void
     {
         $originalKey = Yii::$app->params['turnstile.secretKey'];
-        Yii::$app->params['turnstile.secretKey'] = '1x0000000000000000000000000000000AA';
+        Yii::$app->params['turnstile.secretKey'] = 'test-secret';
 
-        $model = new ContactForm();
+        $model = Stub::construct(
+            ContactForm::class,
+            [],
+            ['fetchTurnstileResponse' => null],
+        );
 
-        $model->turnstileToken = 'test-token';
-
-        $model->validateTurnstile('turnstileToken', null);
-
-        verify($model->hasErrors('turnstileToken'))
-            ->false(
-                'Turnstile validation should pass with Cloudflare always-pass test key.',
-            );
-
-        Yii::$app->params['turnstile.secretKey'] = $originalKey;
-    }
-
-    public function testValidateTurnstileWithCloudflareFailKeys(): void
-    {
-        $originalKey = Yii::$app->params['turnstile.secretKey'];
-        Yii::$app->params['turnstile.secretKey'] = '2x0000000000000000000000000000000AA';
-
-        $model = new ContactForm();
-
-        $model->turnstileToken = 'test-token';
+        $model->turnstileToken = 'some-token';
 
         $model->validateTurnstile('turnstileToken', null);
 
         verify($model->hasErrors('turnstileToken'))
             ->true(
-                'Turnstile validation should fail with Cloudflare always-fail test key.',
+                'Turnstile validation should fail when HTTP request returns null.',
+            );
+
+        Yii::$app->params['turnstile.secretKey'] = $originalKey;
+    }
+
+    public function testValidateTurnstileWithSuccessResponse(): void
+    {
+        $originalKey = Yii::$app->params['turnstile.secretKey'];
+        Yii::$app->params['turnstile.secretKey'] = 'test-secret';
+
+        $model = Stub::construct(
+            ContactForm::class,
+            [],
+            ['fetchTurnstileResponse' => '{"success": true}'],
+        );
+
+        $model->turnstileToken = 'valid-token';
+
+        $model->validateTurnstile('turnstileToken', null);
+
+        verify($model->hasErrors('turnstileToken'))
+            ->false(
+                'Turnstile validation should pass when API returns success.',
             );
 
         Yii::$app->params['turnstile.secretKey'] = $originalKey;

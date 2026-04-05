@@ -36,12 +36,12 @@ final class HelloControllerTest extends Unit
         self::assertSame(
             "custom message\n",
             $result,
-            'Output should match the custom message provided as an argument.'
+            'Output should match the custom message provided as an argument.',
         );
         self::assertSame(
             ExitCode::OK,
             $exitCode,
-            'Exit code should be OK.'
+            'Exit code should be OK.',
         );
     }
 
@@ -61,12 +61,12 @@ final class HelloControllerTest extends Unit
         self::assertSame(
             "hello world\n",
             $result,
-            'Output should match the default message.'
+            'Output should match the default message.',
         );
         self::assertSame(
             ExitCode::OK,
             $exitCode,
-            'Exit code should be OK.'
+            'Exit code should be OK.',
         );
     }
 }
