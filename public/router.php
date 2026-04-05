@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Router script for PHP built-in server with pretty URLs.
  *
