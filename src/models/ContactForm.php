@@ -96,7 +96,7 @@ class ContactForm extends Model
             return;
         }
 
-        $secretKey = \Yii::$app->params['turnstile.secretKey'] ?? '';
+        $secretKey = \Yii::$app->params['turnstile.secretKey'];
 
         if ($secretKey === '') {
             if (YII_ENV_TEST) {

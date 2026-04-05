@@ -246,8 +246,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         $timestamp = (int) $timestampPart;
 
-        /** @phpstan-var int $expire */
-        $expire = Yii::$app->params[$paramKey] ?? $defaultExpire;
+        $expire = (int) (Yii::$app->params[$paramKey] ?? $defaultExpire);
 
         return $timestamp + $expire >= time();
     }

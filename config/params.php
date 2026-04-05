@@ -12,6 +12,7 @@ return [
     'supportEmail' => 'support@example.com',
     'turnstile.siteKey' => '1x00000000000000000000AA',
     'turnstile.secretKey' => '1x0000000000000000000000000000000AA',
+    'user.emailVerificationTokenExpire' => 86400,
     'user.passwordMinLength' => 8,
     'user.passwordResetTokenExpire' => 3600,
 ];

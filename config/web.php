@@ -66,8 +66,7 @@ $config = [
                 ],
                 'appName' => static fn(): string => Yii::$app->name,
                 'turnstileSiteKey' => static function (): string {
-                    /** @phpstan-var string $key */
-                    return Yii::$app->params['turnstile.siteKey'] ?? '';
+                    return Yii::$app->params['turnstile.siteKey'];
                 },
             ],
         ],

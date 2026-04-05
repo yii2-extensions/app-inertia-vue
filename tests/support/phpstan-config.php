@@ -58,10 +58,5 @@ return [
             'identityClass' => User::class,
         ],
     ],
-    'params' => [
-        'adminEmail' => 'admin@example.com',
-        'senderEmail' => 'noreply@example.com',
-        'senderName' => 'Example.com mailer',
-        'supportEmail' => 'support@example.com',
-    ],
+    'params' => require dirname(__DIR__, 2) . '/config/params.php',
 ];

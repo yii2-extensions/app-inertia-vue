@@ -17,8 +17,7 @@ class M260403000000CreateAdminUser extends Migration
 {
     public function safeDown(): bool
     {
-        /** @phpstan-var string $username */
-        $username = \Yii::$app->params['admin.username'] ?? 'admin';
+        $username = \Yii::$app->params['admin.username'];
 
         $this->delete('{{%user}}', ['username' => $username]);
 
@@ -27,14 +26,9 @@ class M260403000000CreateAdminUser extends Migration
 
     public function safeUp(): bool
     {
-        /** @phpstan-var string $username */
-        $username = \Yii::$app->params['admin.username'] ?? 'admin';
-
-        /** @phpstan-var string $password */
-        $password = \Yii::$app->params['admin.password'] ?? 'admin';
-
-        /** @phpstan-var string $email */
-        $email = \Yii::$app->params['admin.email'] ?? 'admin@example.com';
+        $username = \Yii::$app->params['admin.username'];
+        $password = \Yii::$app->params['admin.password'];
+        $email = \Yii::$app->params['admin.email'];
 
         $time = time();
 

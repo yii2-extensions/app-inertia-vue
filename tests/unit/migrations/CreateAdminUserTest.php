@@ -21,8 +21,7 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
         $db = Yii::$app->db;
         $migration = new M260403000000CreateAdminUser(['db' => $db]);
 
-        /** @phpstan-var string $expectedUsername */
-        $expectedUsername = Yii::$app->params['admin.username'] ?? 'admin';
+        $expectedUsername = Yii::$app->params['admin.username'];
 
         $db->createCommand()->delete('{{%user}}', ['username' => $expectedUsername])->execute();
         $migration->up();
@@ -48,10 +47,8 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
     {
         $db = Yii::$app->db;
 
-        /** @phpstan-var string $expectedUsername */
-        $expectedUsername = Yii::$app->params['admin.username'] ?? 'admin';
-        /** @phpstan-var string $expectedEmail */
-        $expectedEmail = Yii::$app->params['admin.email'] ?? 'admin@example.com';
+        $expectedUsername = Yii::$app->params['admin.username'];
+        $expectedEmail = Yii::$app->params['admin.email'];
 
         // clean up if admin already exists from fixtures.
         $db->createCommand()->delete('{{%user}}', ['username' => $expectedUsername])->execute();
@@ -75,8 +72,7 @@ final class CreateAdminUserTest extends \Codeception\Test\Unit
                 User::STATUS_ACTIVE,
                 "Failed asserting that 'status' is 'active'.",
             );
-        /** @phpstan-var string $expectedPassword */
-        $expectedPassword = Yii::$app->params['admin.password'] ?? 'admin';
+        $expectedPassword = Yii::$app->params['admin.password'];
 
         verify(Yii::$app->security->validatePassword($expectedPassword, $admin->password_hash))
             ->true(

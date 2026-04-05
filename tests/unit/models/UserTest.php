@@ -182,8 +182,7 @@ final class UserTest extends \Codeception\Test\Unit
 
     public function testIsPasswordResetTokenValidWithExpiredToken(): void
     {
-        /** @phpstan-var int $expire */
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'] ?? 3600;
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
 
         $expiredToken = 'somevalidvalue_' . (time() - $expire - 1);
 
@@ -227,8 +226,7 @@ final class UserTest extends \Codeception\Test\Unit
 
     public function testIsVerificationTokenValidWithExpiredToken(): void
     {
-        /** @phpstan-var int $expire */
-        $expire = Yii::$app->params['user.emailVerificationTokenExpire'] ?? 86400;
+        $expire = Yii::$app->params['user.emailVerificationTokenExpire'];
 
         $expiredToken = 'somevalidvalue_' . (time() - $expire - 1);
 

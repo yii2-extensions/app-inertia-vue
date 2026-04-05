@@ -131,7 +131,6 @@ class UserController extends Controller
         /** @phpstan-var array<string, mixed> $post */
         $post = $this->request->post();
 
-        /** @phpstan-var array{supportEmail: string} $params */
         $params = Yii::$app->params;
 
         if ($model->load($post) && $model->validate()) {
@@ -174,7 +173,6 @@ class UserController extends Controller
         /** @phpstan-var array<string, mixed> $post */
         $post = $this->request->post();
 
-        /** @phpstan-var array{supportEmail: string} $params */
         $params = Yii::$app->params;
 
         if ($model->load($post) && $model->validate()) {
@@ -254,7 +252,6 @@ class UserController extends Controller
         /** @phpstan-var array<string, mixed> $post */
         $post = $this->request->post();
 
-        /** @phpstan-var array{supportEmail: string} $params */
         $params = Yii::$app->params;
 
         $signed = $model->load($post) && $model->signup(

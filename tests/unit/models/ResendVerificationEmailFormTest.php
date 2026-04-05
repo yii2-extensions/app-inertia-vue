@@ -93,8 +93,7 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
 
         $model->attributes = ['email' => 'test.test@example.com'];
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         try {
             verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
@@ -112,8 +111,7 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
 
         $model->email = 'nonexistent@example.com';
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->false(
@@ -136,8 +134,7 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
                 'Failed asserting that no validation errors are present.',
             );
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->true(
@@ -202,8 +199,7 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
 
         $model->attributes = ['email' => 'test.test@example.com'];
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         try {
             verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))

@@ -46,7 +46,6 @@ class SiteController extends Controller
         /** @phpstan-var array<string, mixed> $post */
         $post = $this->request->post();
 
-        /** @phpstan-var array{adminEmail: string, senderEmail: string, senderName: string} $params */
         $params = Yii::$app->params;
 
         $contact = $model->load($post) && $model->contact(

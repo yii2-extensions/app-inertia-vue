@@ -44,8 +44,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
         $model->email = 'troy.becker@example.com';
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->false(
@@ -75,8 +74,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
         $model->email = $user->email;
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->notEmpty(
@@ -121,8 +119,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
         $model->email = $user->email;
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         try {
             verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
@@ -148,8 +145,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
         $model->email = $user->email;
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->notEmpty(
@@ -204,8 +200,7 @@ final class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
         $model->email = 'not-existing-email@example.com';
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->false(

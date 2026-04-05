@@ -51,8 +51,7 @@ final class SignupFormTest extends \Codeception\Test\Unit
             ],
         );
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         $user = $model->signup(Yii::$app->mailer, $supportEmail, Yii::$app->name);
 
@@ -127,8 +126,7 @@ final class SignupFormTest extends \Codeception\Test\Unit
             ],
         );
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         verify($model->signup(Yii::$app->mailer, $supportEmail, Yii::$app->name))
             ->null(
@@ -170,8 +168,7 @@ final class SignupFormTest extends \Codeception\Test\Unit
             ],
         );
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         try {
             verify($model->signup(Yii::$app->mailer, $supportEmail, Yii::$app->name))
@@ -204,8 +201,7 @@ final class SignupFormTest extends \Codeception\Test\Unit
             ],
         );
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         try {
             verify($model->signup(Yii::$app->mailer, $supportEmail, Yii::$app->name))
@@ -238,8 +234,7 @@ final class SignupFormTest extends \Codeception\Test\Unit
             ],
         );
 
-        /** @phpstan-var string $supportEmail */
-        $supportEmail = Yii::$app->params['supportEmail'] ?? '';
+        $supportEmail = Yii::$app->params['supportEmail'];
 
         try {
             verify($model->signup(Yii::$app->mailer, $supportEmail, Yii::$app->name))
