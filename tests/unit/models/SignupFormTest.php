@@ -216,7 +216,7 @@ final class SignupFormTest extends \Codeception\Test\Unit
 
     public function testSignupRollsBackTransactionWhenUserSaveThrows(): void
     {
-        $handler = static function (ModelEvent $event): void {
+        $handler = static function (): void {
             throw new RuntimeException('Database failure during user save');
         };
 
