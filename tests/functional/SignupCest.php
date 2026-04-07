@@ -45,6 +45,7 @@ final class SignupCest
                 [
                     'username' => 'signup_fail_user',
                     'email' => 'signup.fail@example.com',
+                    'status' => User::STATUS_INACTIVE,
                 ],
             );
             $I->dontSeeEmailIsSent();
