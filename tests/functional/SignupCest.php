@@ -40,7 +40,7 @@ final class SignupCest
             );
 
             $I->seeResponseCodeIs(302);
-            $I->dontSeeRecord(
+            $I->seeRecord(
                 User::class,
                 [
                     'username' => 'signup_fail_user',
