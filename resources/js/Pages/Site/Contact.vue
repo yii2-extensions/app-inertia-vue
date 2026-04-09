@@ -151,7 +151,11 @@ const fieldError = (field) => {
                       autofocus
                     />
                   </div>
-                  <p v-if="fieldError('name')" id="contact-name-error" class="text-red-600 dark:text-red-400 text-sm mt-1">
+                  <p
+                    v-if="fieldError('name')"
+                    id="contact-name-error"
+                    class="text-red-600 dark:text-red-400 text-sm mt-1"
+                  >
                     {{ fieldError("name") }}
                   </p>
                 </div>
@@ -181,7 +185,11 @@ const fieldError = (field) => {
                       placeholder="email@example.com"
                     />
                   </div>
-                  <p v-if="fieldError('email')" id="contact-email-error" class="text-red-600 dark:text-red-400 text-sm mt-1">
+                  <p
+                    v-if="fieldError('email')"
+                    id="contact-email-error"
+                    class="text-red-600 dark:text-red-400 text-sm mt-1"
+                  >
                     {{ fieldError("email") }}
                   </p>
                 </div>
@@ -213,7 +221,11 @@ const fieldError = (field) => {
                     @input="maskPhone"
                   />
                 </div>
-                <p v-if="fieldError('phone')" id="contact-phone-error" class="text-red-600 dark:text-red-400 text-sm mt-1">
+                <p
+                  v-if="fieldError('phone')"
+                  id="contact-phone-error"
+                  class="text-red-600 dark:text-red-400 text-sm mt-1"
+                >
                   {{ fieldError("phone") }}
                 </p>
               </div>
@@ -243,7 +255,11 @@ const fieldError = (field) => {
                     placeholder="Subject"
                   />
                 </div>
-                <p v-if="fieldError('subject')" id="contact-subject-error" class="text-red-600 dark:text-red-400 text-sm mt-1">
+                <p
+                  v-if="fieldError('subject')"
+                  id="contact-subject-error"
+                  class="text-red-600 dark:text-red-400 text-sm mt-1"
+                >
                   {{ fieldError("subject") }}
                 </p>
               </div>
@@ -265,7 +281,11 @@ const fieldError = (field) => {
                   ]"
                   placeholder="Your message..."
                 />
-                <p v-if="fieldError('body')" id="contact-body-error" class="text-red-600 dark:text-red-400 text-sm mt-1">
+                <p
+                  v-if="fieldError('body')"
+                  id="contact-body-error"
+                  class="text-red-600 dark:text-red-400 text-sm mt-1"
+                >
                   {{ fieldError("body") }}
                 </p>
               </div>
@@ -284,7 +304,13 @@ const fieldError = (field) => {
                   Submit
                 </button>
               </div>
-              <p v-if="fieldError('turnstileToken')" id="contact-turnstile-error" role="alert" aria-live="polite" class="text-red-600 dark:text-red-400 text-sm mt-1">
+              <p
+                v-if="fieldError('turnstileToken')"
+                id="contact-turnstile-error"
+                role="alert"
+                aria-live="polite"
+                class="text-red-600 dark:text-red-400 text-sm mt-1"
+              >
                 {{ fieldError("turnstileToken") }}
               </p>
             </form>
