@@ -6,7 +6,18 @@
     "printWidth": 80,
     "overrides": [
         {
-            "files": ["*.js", "*.jsx", "*.ts", "*.tsx", "*.vue", "*.css", "*.scss", "*.html", "*.yml", "*.yaml"],
+            "files": [
+                "*.js",
+                "*.jsx",
+                "*.ts",
+                "*.tsx",
+                "*.vue",
+                "*.css",
+                "*.scss",
+                "*.html",
+                "*.yml",
+                "*.yaml"
+            ],
             "options": {
                 "tabWidth": 2
             }
