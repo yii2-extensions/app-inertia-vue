@@ -20,7 +20,7 @@ Create `resources/js/Pages/Dashboard.vue`:
 import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({
-  stats: { type: Object, default: () => ({}) },
+    stats: { type: Object, default: () => ({}) },
 });
 </script>
 
@@ -50,18 +50,18 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post("/my-controller/action", { preserveScroll: true });
+  form.post("/my-controller/action", { preserveScroll: true });
 };
 </script>
 
 <template>
-    <form @submit.prevent="submit">
-        <input v-model="form['MyModel[name]']" type="text" />
-        <p v-if="form.errors['name']" class="text-red-500 text-sm">
-            {{ form.errors["name"] }}
-        </p>
-        <button type="submit" :disabled="form.processing">Submit</button>
-    </form>
+  <form @submit.prevent="submit">
+    <input v-model="form['MyModel[name]']" type="text" />
+    <p v-if="form.errors['name']" class="text-red-500 text-sm">
+      {{ form.errors["name"] }}
+    </p>
+    <button type="submit" :disabled="form.processing">Submit</button>
+  </form>
 </template>
 ```
 
@@ -91,8 +91,8 @@ import { FwbAlert, FwbBadge, FwbTable } from "flowbite-vue";
 </script>
 
 <template>
-    <FwbAlert type="success" closable>Operation completed.</FwbAlert>
-    <FwbBadge type="green" size="sm">Active</FwbBadge>
+  <FwbAlert type="success" closable>Operation completed.</FwbAlert>
+  <FwbBadge type="green" size="sm">Active</FwbBadge>
 </template>
 ```
 
@@ -106,8 +106,8 @@ import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <Link href="/site/about" class="text-primary-600">About</Link>
-    <Link href="/user/logout" method="post" as="button">Logout</Link>
+  <Link href="/site/about" class="text-primary-600">About</Link>
+  <Link href="/user/logout" method="post" as="button">Logout</Link>
 </template>
 ```
 
