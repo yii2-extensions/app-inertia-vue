@@ -51,7 +51,7 @@ Use the **"Use this template"** button on GitHub to create your own repository f
 ## Quick start
 
 ```bash
-composer create-project --prefer-dist yii2-extensions/app-inertia-vue:^0.1 app-vue
+composer create-project --prefer-dist yii2-extensions/app-inertia-vue:^0.1@dev app-vue
 ```
 
 ## Docker
