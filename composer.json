@@ -48,7 +48,15 @@
     "extra": {
         "branch-alias": {
             "dev-main": "0.1.x-dev"
-        }
+        },
+        "executable": [
+            "yii"
+        ],
+        "writable": [
+            "runtime",
+            "public/assets"
+        ],
+        "yii\\composer\\Installer::postCreateProject": ""
     },
     "config": {
         "sort-packages": true,
