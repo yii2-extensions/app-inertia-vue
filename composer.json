@@ -10,14 +10,12 @@
         "flowbite"
     ],
     "license": "BSD-3-Clause",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": ">=8.3",
         "php-forge/foxy": "^0.2",
         "yii2-extensions/inertia": "^0.1",
         "yii2-extensions/inertia-vue": "^0.1",
-        "yiisoft/yii2": "^22.0",
+        "yiisoft/yii2": "^22.0@dev",
         "yiisoft/yii2-symfonymailer": "^4.0"
     },
     "require-dev": {
@@ -67,7 +65,6 @@
     "config": {
         "allow-plugins": {
             "codeception/c3": true,
-            "infection/extension-installer": true,
             "php-forge/foxy": true,
             "phpstan/extension-installer": true,
             "yiisoft/yii2-composer": true

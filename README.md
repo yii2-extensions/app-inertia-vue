@@ -60,12 +60,37 @@ cd app-vue
 # run database migrations
 ./yii migrate/up
 
-# install JavaScript dependencies and build assets
+# build production assets (one-shot; for live editing see the HMR workflow below)
 npm run build
 
 # start the development server
 ./yii serve
 ```
+
+## Development workflow with HMR
+
+`npm run build` produces production assets once and exits. To edit `.vue` files and see changes in the browser without
+rebuilding, run two processes side by side:
+
+```bash
+# Terminal 1 — Vite dev server (HMR for .vue and Tailwind CSS)
+npm run dev
+
+# Terminal 2 — Yii2 in dev mode
+YII_ENV=dev ./yii serve
+```
+
+How the pieces connect:
+
+- `public/index.php` reads the `YII_ENV` environment variable. When it equals `dev`, `inertiaVue.devMode` evaluates to
+  `true` in `config/web.php`, and the root view emits `<script>` tags pointing at `http://localhost:5173` instead of the
+  built manifest.
+- Vue HMR is carried natively by `@vite/client` together with `@vitejs/plugin-vue`; no additional preamble is required.
+- Before deploying, stop the Vite dev server, run `npm run build`, unset `YII_ENV` (or set it to `prod`), and serve
+  `public/`. Production mode reads hashed assets from `public/build/` via the Vite manifest.
+
+For CORS guidance on non-localhost setups (Docker, tunnels, reverse proxies), troubleshooting, and the full
+production-switch procedure, see the adapter's [Development Notes](https://github.com/yii2-extensions/inertia-vue/blob/main/docs/development.md).
 
 ## Docker
 
