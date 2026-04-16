@@ -65,7 +65,8 @@ final class ResetPasswordForm extends Model
      * Bypassing validation skips the `required` and `min` constraints declared in {@see self::rules()} and may persist
      * an invalid password.
      *
-     * @return bool `true` on successful save; `false` when no user is bound to the token or the save fails.
+     * @return bool `true` on successful save; `false` when the save fails. The null-user branch is a defensive
+     * internal guard, since {@see self::__construct()} throws on invalid or unresolved tokens.
      *
      * @see \app\controllers\UserController::actionResetPassword() for the canonical usage.
      */
