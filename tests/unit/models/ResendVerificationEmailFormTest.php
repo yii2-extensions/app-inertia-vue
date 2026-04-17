@@ -238,6 +238,16 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
 
     public function testTokenPersistedWhenMailerSendReturnsFalse(): void
     {
+        $fixtureUser = User::findOne(['username' => 'test.test']);
+
+        self::assertInstanceOf(
+            User::class,
+            $fixtureUser,
+            "Failed asserting that fixture user 'test.test' exists.",
+        );
+
+        $originalToken = $fixtureUser->verification_token;
+
         $handler = static function (\yii\mail\MailEvent $event): void {
             $event->isValid = false;
         };
@@ -269,6 +279,11 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
         self::assertNotNull(
             $user->verification_token,
             'Failed asserting that verification token is preserved when mailer send returns false.',
+        );
+        self::assertNotSame(
+            $originalToken,
+            $user->verification_token,
+            'Failed asserting that verification token was regenerated and committed before mailer failure.',
         );
     }
 
