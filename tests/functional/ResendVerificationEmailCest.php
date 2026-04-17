@@ -131,9 +131,13 @@ final class ResendVerificationEmailCest
             $user->refresh();
 
             verify($user->verification_token)
-                ->equals(
+                ->notEquals(
                     $originalToken,
-                    'Failed asserting that resend failure leaves the existing verification token untouched.',
+                    'Failed asserting that the verification token was regenerated and committed before the mailer failed.',
+                );
+            verify($user->verification_token)
+                ->notNull(
+                    'Failed asserting that the verification token is preserved after mailer failure.',
                 );
         } finally {
             Yii::$app->mailer->off(BaseMailer::EVENT_BEFORE_SEND, $handler);

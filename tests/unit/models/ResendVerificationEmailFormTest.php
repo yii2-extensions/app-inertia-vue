@@ -222,6 +222,54 @@ final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit
         } finally {
             Yii::$app->mailer->off(\yii\mail\BaseMailer::EVENT_BEFORE_SEND, $handler);
         }
+
+        $user = User::findOne(['username' => 'test.test']);
+
+        self::assertInstanceOf(
+            User::class,
+            $user,
+            "Failed asserting that fixture user 'test.test' exists.",
+        );
+        self::assertNotNull(
+            $user->verification_token,
+            'Failed asserting that verification token is preserved after mailer exception.',
+        );
+    }
+
+    public function testTokenPersistedWhenMailerSendReturnsFalse(): void
+    {
+        $handler = static function (\yii\mail\MailEvent $event): void {
+            $event->isValid = false;
+        };
+
+        Yii::$app->mailer->on(\yii\mail\BaseMailer::EVENT_BEFORE_SEND, $handler);
+
+        $model = new ResendVerificationEmailForm();
+
+        $model->attributes = ['email' => 'test.test@example.com'];
+
+        $supportEmail = Yii::$app->params['supportEmail'];
+
+        try {
+            verify($model->sendEmail(Yii::$app->mailer, $supportEmail, Yii::$app->name))
+                ->false(
+                    "Failed asserting that sendEmail returns 'false' when mailer send returns 'false'.",
+                );
+        } finally {
+            Yii::$app->mailer->off(\yii\mail\BaseMailer::EVENT_BEFORE_SEND, $handler);
+        }
+
+        $user = User::findOne(['username' => 'test.test']);
+
+        self::assertInstanceOf(
+            User::class,
+            $user,
+            "Failed asserting that fixture user 'test.test' exists.",
+        );
+        self::assertNotNull(
+            $user->verification_token,
+            'Failed asserting that verification token is preserved when mailer send returns false.',
+        );
     }
 
     public function testUnknownEmailAddressValidatesAndSendEmailReturnsFalse(): void

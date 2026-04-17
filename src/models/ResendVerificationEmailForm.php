@@ -80,27 +80,29 @@ final class ResendVerificationEmailForm extends Model
                 return false;
             }
 
-            $sent = $mailer
-                ->compose(['html' => 'emailVerify-html', 'text' => 'emailVerify-text'], ['user' => $user])
-                ->setFrom([$supportEmail => "{$appName} robot"])
-                ->setTo($this->email)
-                ->setSubject("Account registration at {$appName}")
-                ->send();
-
-            if (!$sent) {
-                $transaction->rollBack();
-
-                return false;
-            }
-
             $transaction->commit();
-
-            return true;
+            $transaction = null;
         } catch (Throwable $e) {
             if ($transaction !== null && $transaction->isActive) {
                 $transaction->rollBack();
             }
 
+            Yii::error(
+                $e->getMessage(),
+                __METHOD__,
+            );
+
+            return false;
+        }
+
+        try {
+            return $mailer
+                ->compose(['html' => 'emailVerify-html', 'text' => 'emailVerify-text'], ['user' => $user])
+                ->setFrom([$supportEmail => "{$appName} robot"])
+                ->setTo($this->email)
+                ->setSubject("Account registration at {$appName}")
+                ->send();
+        } catch (Throwable $e) {
             Yii::error(
                 $e->getMessage(),
                 __METHOD__,
