@@ -28,7 +28,7 @@
         "codeception/module-yii2": "^2.0",
         "codeception/verify": "^3.4",
         "maglnet/composer-require-checker": "^4.17",
-        "php-forge/coding-standard": "^0.1",
+        "php-forge/coding-standard": "^0.2",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-strict-rules": "^2.0.3",
         "yii2-extensions/phpstan": "^0.4"
