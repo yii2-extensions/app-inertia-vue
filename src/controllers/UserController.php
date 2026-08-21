@@ -24,9 +24,6 @@ use yii\web\{BadRequestHttpException, Response};
 
 /**
  * Handles user-related actions: login, logout, signup, password recovery, email verification, and user listing.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class UserController extends Controller
 {

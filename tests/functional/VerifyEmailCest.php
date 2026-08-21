@@ -15,9 +15,6 @@ use yii\helpers\Url;
 
 /**
  * Functional tests for {@see \app\controllers\UserController::actionVerifyEmail()} email verification via Inertia.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class VerifyEmailCest
 {

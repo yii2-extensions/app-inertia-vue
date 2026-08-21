@@ -11,7 +11,6 @@ use Yii;
 /**
  * Unit tests for {@see M260403000000CreateAdminUser} migration.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class CreateAdminUserTest extends \Codeception\Test\Unit

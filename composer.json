@@ -10,6 +10,14 @@
         "flowbite"
     ],
     "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Wilmer Arambula",
+            "email": "terabytesoftw@gmail.com",
+            "homepage": "https://github.com/terabytesoftw",
+            "role": "Developer"
+        }
+    ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=8.3",

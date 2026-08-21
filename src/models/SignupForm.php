@@ -11,9 +11,6 @@ use yii\mail\MailerInterface;
 
 /**
  * Handles user registration with email verification.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class SignupForm extends Model
 {

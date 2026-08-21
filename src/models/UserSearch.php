@@ -8,9 +8,6 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Provides search and filtering capabilities for the {@see User} model.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class UserSearch extends User
 {

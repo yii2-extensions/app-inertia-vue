@@ -16,7 +16,6 @@ use yii\mail\MessageInterface;
 /**
  * Unit tests for {@see \app\models\ResendVerificationEmailForm} model.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class ResendVerificationEmailFormTest extends \Codeception\Test\Unit

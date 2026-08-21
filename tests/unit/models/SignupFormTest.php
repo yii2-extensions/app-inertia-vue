@@ -16,7 +16,6 @@ use yii\mail\{BaseMailer, MailEvent, MessageInterface};
 /**
  * Unit tests for {@see \app\models\SignupForm} model.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class SignupFormTest extends \Codeception\Test\Unit

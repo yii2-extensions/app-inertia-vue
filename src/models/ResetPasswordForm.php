@@ -10,9 +10,6 @@ use yii\base\Model;
 
 /**
  * Handles password reset with a valid token.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class ResetPasswordForm extends Model
 {

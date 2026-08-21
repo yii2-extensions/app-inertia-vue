@@ -18,9 +18,6 @@ use yii\mail\MailEvent;
 /**
  * Functional tests for {@see \app\controllers\UserController::actionRequestPasswordReset()} and
  * {@see \app\controllers\UserController::actionResetPassword()} via Inertia.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class PasswordResetCest
 {

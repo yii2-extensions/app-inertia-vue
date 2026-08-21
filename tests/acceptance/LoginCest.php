@@ -10,9 +10,6 @@ use yii\helpers\Url;
 
 /**
  * Acceptance tests for the login page.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class LoginCest
 {

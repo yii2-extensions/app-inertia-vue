@@ -12,9 +12,6 @@ use yii\mail\MailerInterface;
 
 /**
  * Represents the contact form model with phone validation, Turnstile CAPTCHA, and email sending.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 class ContactForm extends Model
 {

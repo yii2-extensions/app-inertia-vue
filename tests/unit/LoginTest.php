@@ -13,7 +13,6 @@ use yii\web\Response;
  * Unit tests for {@see \app\controllers\UserController} login action and {@see \app\controllers\SiteController} about
  * action via Inertia responses.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class LoginTest extends \Codeception\Test\Unit

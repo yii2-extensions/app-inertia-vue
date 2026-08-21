@@ -10,7 +10,6 @@ use Yii;
 /**
  * Unit tests for {@see \app\migrations\M260330000000CreateUserTable} migration.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class CreateUserTableTest extends \Codeception\Test\Unit

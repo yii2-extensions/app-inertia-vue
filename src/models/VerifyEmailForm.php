@@ -9,9 +9,6 @@ use yii\base\Model;
 
 /**
  * Handles email verification after user registration.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class VerifyEmailForm extends Model
 {

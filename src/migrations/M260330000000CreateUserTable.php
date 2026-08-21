@@ -8,9 +8,6 @@ use yii\db\Migration;
 
 /**
  * Creates the `user` table for database-backed authentication.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class M260330000000CreateUserTable extends Migration
 {
