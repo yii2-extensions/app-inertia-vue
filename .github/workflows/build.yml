@@ -21,7 +21,7 @@ jobs:
     with:
       codeception-command: vendor/bin/codecept run --env php-builtin --coverage-xml
       coverage-file: tests/support/output/coverage.xml
-      extensions: dom, json, gd, imagick, pdo_sqlite
+      extensions: dom, json, gd, imagick, intl, pdo_sqlite
       php-version: '["8.3","8.4","8.5"]'
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
