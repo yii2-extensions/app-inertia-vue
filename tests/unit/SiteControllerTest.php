@@ -13,7 +13,6 @@ use yii\web\{HttpException, Response};
 /**
  * Unit tests for {@see SiteController} all actions.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class SiteControllerTest extends \Codeception\Test\Unit

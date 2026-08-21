@@ -11,7 +11,6 @@ use Yii;
 /**
  * Unit tests for {@see \app\models\LoginForm} model.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class LoginFormTest extends \Codeception\Test\Unit
@@ -201,13 +200,7 @@ final class LoginFormTest extends \Codeception\Test\Unit
         $count = 0;
 
         foreach ($logger->messages as $message) {
-            if (!is_array($message)) {
-                continue;
-            }
-
-            $category = $message[2] ?? null;
-
-            if (is_string($category) && str_starts_with($category, 'yii\db\Command::query')) {
+            if (str_starts_with($message[2], 'yii\db\Command::query')) {
                 $count++;
             }
         }

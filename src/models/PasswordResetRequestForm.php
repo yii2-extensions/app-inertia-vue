@@ -11,9 +11,6 @@ use yii\mail\MailerInterface;
 
 /**
  * Handles password reset request via email.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class PasswordResetRequestForm extends Model
 {

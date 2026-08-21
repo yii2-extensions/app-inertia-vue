@@ -13,7 +13,6 @@ use yii\web\{IdentityInterface, Response};
 /**
  * Unit tests for {@see \app\controllers\UserController} logout action.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class LogoutTest extends \Codeception\Test\Unit

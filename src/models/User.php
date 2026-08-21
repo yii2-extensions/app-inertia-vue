@@ -24,9 +24,6 @@ use yii\web\IdentityInterface;
  * @property int $created_at
  * @property int $updated_at
  * @property string $password write-only password
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -282,8 +279,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Validates password.
-     *
      * @param string $password Password to be validated.
      *
      * @return bool `true` if the password is valid, `false` otherwise.

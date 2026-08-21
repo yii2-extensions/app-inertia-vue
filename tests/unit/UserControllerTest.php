@@ -16,7 +16,6 @@ use yii\web\{BadRequestHttpException, Response};
 /**
  * Unit tests for {@see UserController} all actions.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class UserControllerTest extends \Codeception\Test\Unit

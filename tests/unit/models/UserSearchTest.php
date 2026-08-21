@@ -11,7 +11,6 @@ use yii\data\ActiveDataProvider;
 /**
  * Unit tests for {@see UserSearch} model.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class UserSearchTest extends \Codeception\Test\Unit

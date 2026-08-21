@@ -11,9 +11,6 @@ use yii\mail\MailerInterface;
 
 /**
  * Handles resending of verification email to inactive users.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class ResendVerificationEmailForm extends Model
 {

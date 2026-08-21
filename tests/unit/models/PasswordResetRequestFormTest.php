@@ -16,7 +16,6 @@ use yii\symfonymailer\Message;
 /**
  * Unit tests for {@see \app\models\PasswordResetRequestForm} model.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class PasswordResetRequestFormTest extends \Codeception\Test\Unit

@@ -10,9 +10,6 @@ use yii\db\Migration;
 
 /**
  * Seeds the default administrator user.
- *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
- * @since 0.1
  */
 final class M260403000000CreateAdminUser extends Migration
 {

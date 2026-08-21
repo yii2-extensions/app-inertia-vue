@@ -15,7 +15,6 @@ use function strlen;
 /**
  * Unit tests for {@see \app\models\User} ActiveRecord identity model.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class UserTest extends \Codeception\Test\Unit

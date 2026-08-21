@@ -10,13 +10,22 @@
         "flowbite"
     ],
     "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Wilmer Arambula",
+            "email": "terabytesoftw@gmail.com",
+            "homepage": "https://github.com/terabytesoftw",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=8.3",
         "php-forge/foxy": "^0.2",
         "yii2-extensions/inertia": "^0.1",
         "yii2-extensions/inertia-vue": "^0.1",
         "yiisoft/yii2": "^22.0@dev",
-        "yiisoft/yii2-symfonymailer": "^4.0"
+        "yiisoft/yii2-symfonymailer": "^22.0@dev"
     },
     "require-dev": {
         "codeception/c3": "^2.9",
@@ -28,10 +37,13 @@
         "codeception/module-yii2": "^2.0",
         "codeception/verify": "^3.4",
         "maglnet/composer-require-checker": "^4.17",
-        "php-forge/coding-standard": "^0.1",
+        "php-forge/baseline": "^0.1",
+        "php-forge/coding-standard": "^0.3",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-strict-rules": "^2.0.3",
-        "yii2-extensions/phpstan": "^0.4"
+        "yii2-extensions/debug": "^0.2@dev",
+        "yii2-extensions/phpstan": "^0.5@dev",
+        "yii2-extensions/scaffold": "^0.2"
     },
     "autoload": {
         "psr-4": {
@@ -46,6 +58,12 @@
     "extra": {
         "branch-alias": {
             "dev-main": "0.1.x-dev"
+        },
+        "scaffold": {
+            "allowed-packages": [
+                "php-forge/baseline",
+                "php-forge/coding-standard"
+            ]
         },
         "yii\\composer\\Installer::postCreateProject": {
             "setPermission": [
@@ -67,6 +85,7 @@
             "codeception/c3": true,
             "php-forge/foxy": true,
             "phpstan/extension-installer": true,
+            "yii2-extensions/scaffold": true,
             "yiisoft/yii2-composer": true
         },
         "foxy": {

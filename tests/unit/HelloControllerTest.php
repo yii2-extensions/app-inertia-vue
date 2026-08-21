@@ -15,7 +15,6 @@ use function ob_start;
 /**
  * Unit tests for {@see HelloController} output behavior.
  *
- * @author Wilmer Arambula <terabytesoftw@gmail.com>
  * @since 0.1
  */
 final class HelloControllerTest extends Unit

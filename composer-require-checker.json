@@ -1,3 +1,21 @@
 {
-    "symbol-whitelist": ["ctype_digit", "YII_DEBUG", "YII_ENV", "YII_ENV_TEST"]
+    "symbol-whitelist": [
+        "ctype_digit",
+        "YII_DEBUG",
+        "YII_ENV",
+        "YII_ENV_TEST"
+    ],
+    "php-core-extensions": [
+        "Core",
+        "date",
+        "json",
+        "hash",
+        "pcre",
+        "Phar",
+        "Reflection",
+        "SPL",
+        "random",
+        "standard"
+    ],
+    "scan-files": []
 }
