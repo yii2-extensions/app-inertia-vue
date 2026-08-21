@@ -29,11 +29,13 @@
         "codeception/module-yii2": "^2.0",
         "codeception/verify": "^3.4",
         "maglnet/composer-require-checker": "^4.17",
-        "php-forge/coding-standard": "^0.1",
+        "php-forge/baseline": "^0.1",
+        "php-forge/coding-standard": "^0.3",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-strict-rules": "^2.0.3",
         "yii2-extensions/debug": "^0.2@dev",
-        "yii2-extensions/phpstan": "^0.5@dev"
+        "yii2-extensions/phpstan": "^0.5@dev",
+        "yii2-extensions/scaffold": "^0.2"
     },
     "autoload": {
         "psr-4": {
@@ -48,6 +50,12 @@
     "extra": {
         "branch-alias": {
             "dev-main": "0.1.x-dev"
+        },
+        "scaffold": {
+            "allowed-packages": [
+                "php-forge/baseline",
+                "php-forge/coding-standard"
+            ]
         },
         "yii\\composer\\Installer::postCreateProject": {
             "setPermission": [
@@ -69,6 +77,7 @@
             "codeception/c3": true,
             "php-forge/foxy": true,
             "phpstan/extension-installer": true,
+            "yii2-extensions/scaffold": true,
             "yiisoft/yii2-composer": true
         },
         "foxy": {

@@ -2,18 +2,12 @@
 
 declare(strict_types=1);
 
-/** @var \Symplify\EasyCodingStandard\Configuration\ECSConfigBuilder $ecsConfigBuilder */
-$ecsConfigBuilder = require __DIR__ . '/vendor/php-forge/coding-standard/config/ecs.php';
+/** @var \Symplify\EasyCodingStandard\Configuration\ECSConfigBuilder $builder */
+$builder = require __DIR__ . '/vendor/php-forge/coding-standard/src/ecs-83.php';
 
-return $ecsConfigBuilder->withPaths(
+return $builder->withPaths(
     [
-        __DIR__ . '/config',
         __DIR__ . '/src',
         __DIR__ . '/tests',
-    ],
-)
-->withSkip(
-    [
-        __DIR__ . '/tests/support',
     ],
 );

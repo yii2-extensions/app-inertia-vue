@@ -1,0 +1,22 @@
+---
+on:
+  - pull_request
+  - push
+
+name: quality
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    uses: yii2-framework/actions/.github/workflows/quality.yml@670b6444a11798dc2b38f2563dbbcef063dfc0ab # v2.0.1
+    permissions:
+      contents: read
+    with:
+      codespell-config: .github/linters/.codespellrc
+      editorconfig-checker-config: .github/linters/.editorconfig-checker.json
+      markdownlint-config: .github/linters/.markdown-lint.yml
+      prettier-config: .prettierrc.json
+      prettier-ignore-path: .prettierignore
+      yamllint-targets: .github

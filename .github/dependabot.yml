@@ -6,10 +6,20 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns: ["*"]
 
   # Maintain dependencies for Composer
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
+    groups:
+      composer:
+        patterns: ["*"]
     versioning-strategy: increase-if-necessary

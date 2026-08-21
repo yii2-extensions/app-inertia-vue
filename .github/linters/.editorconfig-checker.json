@@ -1,0 +1,23 @@
+{
+    "Exclude": [
+        "\\.min\\.css$",
+        "\\.min\\.js$",
+        "^\\.claude/",
+        "^\\.codex/",
+        "^\\.config/gh/",
+        "^\\.github/agents/",
+        "^\\.github/copilot-instructions\\.md$",
+        "^\\.github/copilot/",
+        "^\\.github/instructions/",
+        "^\\.github/prompts/",
+        "^\\.github/skills/",
+        "^\\.vscode/",
+        "^code_coverage/",
+        "^composer\\.lock$",
+        "^runtime/",
+        "^tests/runtime/",
+        "^vendor/",
+        "phpstan-baseline\\.neon$",
+        "scaffold-lock\\.json$"
+    ]
+}

@@ -14,8 +14,7 @@ name: Composer require checker
 
 permissions:
   contents: read
-  pull-requests: write
 
 jobs:
   composer-require-checker:
-    uses: yii2-framework/actions/.github/workflows/composer-require-checker.yml@main
+    uses: yii2-framework/actions/.github/workflows/composer-require-checker.yml@670b6444a11798dc2b38f2563dbbcef063dfc0ab # v2.0.1
