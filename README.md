@@ -20,6 +20,9 @@
     <a href="https://github.com/yii2-extensions/app-inertia-vue/actions/workflows/static.yml" target="_blank">
         <img src="https://img.shields.io/github/actions/workflow/status/yii2-extensions/app-inertia-vue/static.yml?style=for-the-badge&logo=github&label=PHPStan" alt="PHPStan">
     </a>
+    <a href="https://github.com/yii2-extensions/app-inertia-vue/actions/workflows/security.yml" target="_blank">
+        <img src="https://img.shields.io/github/actions/workflow/status/yii2-extensions/app-inertia-vue/security.yml?style=for-the-badge&label=Security&logo=github" alt="Security">
+    </a>
 </p>
 
 <p align="center">
@@ -117,7 +120,7 @@ docker compose up -d
 ## Quality code
 
 [![PHPStan Level Max](https://img.shields.io/badge/PHPStan-Level%20Max-4F5D95.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yii2-extensions/app-inertia-vue/actions/workflows/static.yml)
-[![Super-Linter](https://img.shields.io/github/actions/workflow/status/yii2-extensions/app-inertia-vue/linter.yml?style=for-the-badge&label=Super-Linter&logo=github)](https://github.com/yii2-extensions/app-inertia-vue/actions/workflows/linter.yml)
+[![Quality](https://img.shields.io/github/actions/workflow/status/yii2-extensions/app-inertia-vue/quality.yml?style=for-the-badge&label=Quality&logo=github)](https://github.com/yii2-extensions/app-inertia-vue/actions/workflows/quality.yml)
 [![StyleCI](https://img.shields.io/badge/StyleCI-Passed-44CC11.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.styleci.io/repos/1196250859?branch=main)
 
 ## Our social networks
