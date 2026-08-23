@@ -18,8 +18,8 @@
 
 @theme {
     --font-sans:
-        "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
+        "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Roboto",
+        "Helvetica Neue", "Arial", sans-serif;
     --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
     --font-code: "JetBrains Mono", ui-monospace, monospace;
 
@@ -111,12 +111,12 @@ a.desc::after {
 }
 
 a.asc::after {
-    border-bottom: solid 7px currentColor;
+    border-bottom: solid 7px currentcolor;
     border-top-width: 0;
 }
 
 a.desc::after {
-    border-top: solid 7px currentColor;
+    border-top: solid 7px currentcolor;
     border-bottom-width: 0;
 }
 
@@ -432,7 +432,7 @@ body {
     display: block;
     width: 100%;
     height: 1px;
-    background: currentColor;
+    background: currentcolor;
     transition:
         transform 160ms ease,
         opacity 160ms ease;
@@ -587,6 +587,7 @@ body {
     --release-ink: #08222d;
     --release-muted: #58707b;
     --release-line: #d6e4e9;
+
     position: relative;
 }
 
@@ -958,7 +959,7 @@ body {
 .release-spec span {
     margin-bottom: 0.3rem;
     color: var(--release-muted);
-    font-size: 0.55rem;
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -1206,7 +1207,7 @@ body {
     margin-bottom: 0.3rem;
     color: var(--release-muted);
     font-family: var(--font-code);
-    font-size: 0.5rem;
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -1743,7 +1744,7 @@ body {
 .protocol-proof__meta dt {
     margin-bottom: 0.35rem;
     color: #66838e;
-    font-size: 0.52rem;
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
@@ -1864,7 +1865,7 @@ body {
 .protocol-scroll__item span {
     color: var(--event-accent);
     font-family: var(--font-code);
-    font-size: 0.52rem;
+    font-size: 0.68rem;
     letter-spacing: 0.09em;
 }
 
@@ -1924,6 +1925,10 @@ body {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     border-block: 1px solid var(--release-line);
+}
+
+.demo-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .demo-card {
@@ -2074,15 +2079,6 @@ body {
 }
 
 @media (min-width: 768px) {
-    .site-nav__desktop {
-        display: flex;
-    }
-
-    .site-nav__mobile-actions,
-    .site-nav__mobile {
-        display: none !important;
-    }
-
     .site-footer__inner {
         grid-template-columns: minmax(0, 1.3fr) minmax(12rem, 0.65fr) auto;
         align-items: start;
@@ -2101,14 +2097,31 @@ body {
     }
 }
 
-@media (max-width: 1080px) {
-    .site-nav__link {
-        display: none;
+@media (min-width: 1081px) {
+    .site-nav__desktop {
+        display: flex;
     }
 
+    .site-nav__mobile-actions,
+    .site-nav__mobile {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1080px) {
     .release-hero {
         grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
         gap: 2.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .release-proof {
+        grid-template-columns: minmax(3.5rem, 0.14fr) minmax(0, 1fr);
+    }
+
+    .release-code {
+        grid-column: 1 / -1;
     }
 }
 
@@ -2140,14 +2153,6 @@ body {
 
     .section-intro > p {
         max-width: 43rem;
-    }
-
-    .release-proof {
-        grid-template-columns: minmax(3.5rem, 0.14fr) minmax(0, 1fr);
-    }
-
-    .release-code {
-        grid-column: 1 / -1;
     }
 
     .release-foundation {
@@ -2375,6 +2380,11 @@ body {
         animation: none;
         opacity: 0.7;
         transform: none;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
     }
 
     .release-button,

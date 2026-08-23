@@ -1,41 +1,12 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
-
-const theme = ref("light");
-let mediaQuery;
-
-const apply = (value, persist = true) => {
-    theme.value = value;
-    document.documentElement.classList.toggle("dark", value === "dark");
-
-    if (persist) {
-        localStorage.setItem("theme", value);
-    }
-};
-
-const toggle = () => {
-    apply(theme.value === "dark" ? "light" : "dark");
-};
-
-const handleSystemThemeChange = (event) => {
-    if (!localStorage.getItem("theme")) {
-        apply(event.matches ? "dark" : "light", false);
-    }
-};
-
-onMounted(() => {
-    mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const stored = localStorage.getItem("theme");
-    const preferred = stored ?? (mediaQuery.matches ? "dark" : "light");
-
-    apply(preferred, Boolean(stored));
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
+defineProps({
+    theme: {
+        type: String,
+        required: true,
+    },
 });
 
-onUnmounted(() => {
-    mediaQuery?.removeEventListener("change", handleSystemThemeChange);
-});
+const emit = defineEmits(["toggle"]);
 </script>
 
 <template>
@@ -46,7 +17,7 @@ onUnmounted(() => {
             theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
         "
         :title="theme === 'dark' ? 'Use light mode' : 'Use dark mode'"
-        @click="toggle"
+        @click="emit('toggle')"
     >
         <span class="theme-switch__label">
             {{ theme === "dark" ? "Light" : "Dark" }}

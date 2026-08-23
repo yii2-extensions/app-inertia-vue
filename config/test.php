@@ -45,6 +45,7 @@ return [
             'rootView' => '@app/resources/views/app.php',
             'shared' => [
                 'appName' => static fn(): string => Yii::$app->name,
+                'canAccessDebug' => false,
                 'auth' => static function (): array {
                     $user = Yii::$app->user;
                     $identity = $user->identity;

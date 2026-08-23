@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
+import { useTheme } from "../composables/useTheme.js";
 import ThemeToggle from "./ThemeToggle.vue";
 
 const page = usePage();
 const open = ref(false);
+const { theme, toggleTheme } = useTheme();
 
 const landingLinks = [
     { href: "/#new-in-22", label: "What’s new" },
@@ -29,7 +31,11 @@ const closeMenu = () => {
 
 <template>
     <header class="site-header">
-        <nav class="site-nav" aria-label="Primary navigation">
+        <nav
+            class="site-nav"
+            aria-label="Primary navigation"
+            @keydown.esc="closeMenu"
+        >
             <div class="site-nav__inner">
                 <Link
                     href="/"
@@ -39,26 +45,26 @@ const closeMenu = () => {
                 >
                     <img
                         src="/images/yii_logo_light.svg"
-                        alt="Yii Framework"
+                        alt=""
                         class="site-brand__logo dark:hidden"
                     />
                     <img
                         src="/images/yii_logo_dark.svg"
-                        alt="Yii Framework"
+                        alt=""
                         class="site-brand__logo hidden dark:block"
                     />
                     <span>22.0 preview</span>
                 </Link>
 
                 <div class="site-nav__desktop">
-                    <a
+                    <Link
                         v-for="item in landingLinks"
                         :key="item.href"
                         :href="item.href"
                         class="site-nav__link"
                     >
                         {{ item.label }}
-                    </a>
+                    </Link>
                     <a
                         href="https://github.com/yiisoft/yii2/blob/22.0/framework/UPGRADE-22.md"
                         class="site-nav__link"
@@ -68,7 +74,7 @@ const closeMenu = () => {
                         Upgrade guide
                     </a>
 
-                    <ThemeToggle />
+                    <ThemeToggle :theme="theme" @toggle="toggleTheme" />
 
                     <Link
                         v-if="page.props.auth.isGuest"
@@ -113,7 +119,7 @@ const closeMenu = () => {
                 </div>
 
                 <div class="site-nav__mobile-actions">
-                    <ThemeToggle />
+                    <ThemeToggle :theme="theme" @toggle="toggleTheme" />
                     <button
                         type="button"
                         class="site-nav__menu-button"
@@ -138,14 +144,14 @@ const closeMenu = () => {
             </div>
 
             <div v-show="open" id="mobile-navigation" class="site-nav__mobile">
-                <a
+                <Link
                     v-for="item in landingLinks"
                     :key="item.href"
                     :href="item.href"
                     @click="closeMenu"
                 >
                     {{ item.label }}
-                </a>
+                </Link>
                 <a
                     href="https://github.com/yiisoft/yii2/blob/22.0/framework/UPGRADE-22.md"
                     rel="noopener noreferrer"

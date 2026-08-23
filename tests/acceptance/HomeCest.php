@@ -17,8 +17,10 @@ final class HomeCest
         $I->amOnPage(Url::toRoute('/site/index'));
         $I->seeResponseCodeIs(200);
         $I->seeInSource('"component":"Site\/Index"');
+        $I->seeInSource('"canAccessDebug":false');
         $I->seeInSource('"protocolFeed"');
-        $I->seeInSource('"mergeProps":["protocolFeed.data"]');
+        $I->seeInSource('"mergeProps"');
+        $I->seeInSource('"protocolFeed.data"');
         $I->seeInSource('"pageName":"protocol"');
         $I->seeInSource('"nextPage":2');
         $I->seeInSource('"runtime"');

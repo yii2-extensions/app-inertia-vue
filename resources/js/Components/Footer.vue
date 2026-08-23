@@ -14,12 +14,12 @@ const year = new Date().getFullYear();
                 >
                     <img
                         src="/images/yii_logo_light.svg"
-                        alt="Yii Framework"
+                        alt=""
                         class="dark:hidden"
                     />
                     <img
                         src="/images/yii_logo_dark.svg"
-                        alt="Yii Framework"
+                        alt=""
                         class="hidden dark:block"
                     />
                 </a>
@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
                 </p>
             </div>
 
-            <div class="site-footer__links" aria-label="Project links">
+            <nav class="site-footer__links" aria-label="Project links">
                 <a
                     href="https://github.com/yiisoft/yii2/tree/22.0"
                     rel="noopener noreferrer"
@@ -51,7 +51,7 @@ const year = new Date().getFullYear();
                 >
                     Application source
                 </a>
-            </div>
+            </nav>
 
             <div class="site-footer__status">
                 <span><i aria-hidden="true"></i> Development preview</span>

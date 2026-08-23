@@ -164,15 +164,19 @@ const demos = computed(() => [
         label: accountDemo.value.label,
         inertia: true,
     },
-    {
-        eyebrow: "Diagnostics",
-        title: "Yii debug panel",
-        description:
-            "Inspect requests, queries, logs, configuration, and timings with the integrated development module.",
-        href: "/debug",
-        label: "Inspect the runtime",
-        inertia: false,
-    },
+    ...(page.props.canAccessDebug
+        ? [
+              {
+                  eyebrow: "Diagnostics",
+                  title: "Yii debug panel",
+                  description:
+                      "Inspect requests, queries, logs, configuration, and timings with the integrated development module.",
+                  href: "/debug/index",
+                  label: "Inspect the runtime",
+                  inertia: false,
+              },
+          ]
+        : []),
     {
         eyebrow: "Source",
         title: "Start from the template",
@@ -560,7 +564,7 @@ const replayRequest = () => {
                     <dl class="protocol-proof__meta">
                         <div>
                             <dt>Prop</dt>
-                            <dd><code>scrollProps</code></dd>
+                            <dd><code>protocolFeed</code></dd>
                         </div>
                         <div>
                             <dt>Merge path</dt>
@@ -571,7 +575,7 @@ const replayRequest = () => {
 
                 <div class="protocol-scroll">
                     <div class="protocol-scroll__bar">
-                        <div>
+                        <div id="protocol-trace-label">
                             <span aria-hidden="true"></span>
                             Protocol trace
                         </div>
@@ -585,6 +589,8 @@ const replayRequest = () => {
                         class="protocol-scroll__viewport"
                         scroll-region
                         tabindex="0"
+                        role="region"
+                        aria-labelledby="protocol-trace-label"
                     >
                         <InfiniteScroll
                             data="protocolFeed"
@@ -652,7 +658,10 @@ const replayRequest = () => {
                 </p>
             </div>
 
-            <div class="demo-grid">
+            <div
+                class="demo-grid"
+                :class="{ 'demo-grid--compact': demos.length === 2 }"
+            >
                 <article
                     v-for="demo in demos"
                     :key="demo.title"

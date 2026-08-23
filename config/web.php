@@ -14,6 +14,7 @@ use yii\symfonymailer\Mailer;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$debugAllowedIPs = ['127.0.0.1', '::1'];
 
 $config = [
     'id' => 'app-inertia-vue',
@@ -56,6 +57,11 @@ $config = [
                     ];
                 },
                 'appName' => static fn(): string => Yii::$app->name,
+                'canAccessDebug' => static fn(): bool => YII_DEBUG && in_array(
+                    Yii::$app->request->getUserIP(),
+                    $debugAllowedIPs,
+                    true,
+                ),
             ],
             'version' => static function (): string {
                 $path = Yii::getAlias('@webroot/build/.vite/manifest.json');
@@ -129,7 +135,7 @@ if (YII_DEBUG) {
     $config['modules'] = [
         'debug' => [
             'class' => \yii\debug\Module::class,
-            'allowedIPs' => ['127.0.0.1', '::1'],
+            'allowedIPs' => $debugAllowedIPs,
         ],
     ];
 }

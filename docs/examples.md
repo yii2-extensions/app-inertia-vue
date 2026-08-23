@@ -73,11 +73,12 @@ import { usePage } from "@inertiajs/vue3";
 
 const page = usePage();
 const appName = page.props.appName;
+const canAccessDebug = page.props.canAccessDebug;
 const user = page.props.auth?.user;
 </script>
 ```
 
-Available shared props: `appName`, `auth`, and `flash`.
+Available shared props: `appName`, `auth`, `canAccessDebug`, and `flash`.
 
 ## Using Flowbite Vue components
 
