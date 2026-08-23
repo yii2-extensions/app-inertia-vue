@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use app\models\User;
+use PHPForge\Vite\Configuration\{DevelopmentConfiguration, ProductionConfiguration};
+use PHPForge\Vite\Vite;
 use yii\caching\FileCache;
-use yii\inertia\{Manager, Vite};
-use yii\inertia\vue\Bootstrap;
+use yii\inertia\{Bootstrap, Manager};
 use yii\log\FileTarget;
 use yii\mail\MailerInterface;
 use yii\rbac\PhpManager;
@@ -13,6 +14,7 @@ use yii\symfonymailer\Mailer;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$debugAllowedIPs = ['127.0.0.1', '::1'];
 
 $config = [
     'id' => 'app-inertia-vue',
@@ -55,9 +57,11 @@ $config = [
                     ];
                 },
                 'appName' => static fn(): string => Yii::$app->name,
-                'turnstileSiteKey' => static function (): string {
-                    return Yii::$app->params['turnstile.siteKey'];
-                },
+                'canAccessDebug' => static fn(): bool => YII_DEBUG && in_array(
+                    Yii::$app->request->getUserIP(),
+                    $debugAllowedIPs,
+                    true,
+                ),
             ],
             'version' => static function (): string {
                 $path = Yii::getAlias('@webroot/build/.vite/manifest.json');
@@ -67,13 +71,17 @@ $config = [
         ],
         'inertiaVue' => [
             'class' => Vite::class,
-            'baseUrl' => '@web/build',
-            'devMode' => YII_ENV === 'dev',
-            'devServerUrl' => 'http://localhost:5173',
-            'entrypoints' => [
-                'resources/js/app.js',
+            '__construct()' => [
+                'configuration' => YII_ENV === 'dev'
+                    ? new DevelopmentConfiguration(
+                        devServerUrl: 'http://localhost:5174',
+                    )
+                    : new ProductionConfiguration(
+                        manifestPath: dirname(__DIR__) . '/public/build/.vite/manifest.json',
+                        assetBaseUrl: '/build',
+                    ),
+                'entrypoints' => ['resources/js/app.js'],
             ],
-            'manifestPath' => '@webroot/build/.vite/manifest.json',
         ],
         'log' => [
             'targets' => [
@@ -127,7 +135,7 @@ if (YII_DEBUG) {
     $config['modules'] = [
         'debug' => [
             'class' => \yii\debug\Module::class,
-            'allowedIPs' => ['127.0.0.1', '::1'],
+            'allowedIPs' => $debugAllowedIPs,
         ],
     ];
 }

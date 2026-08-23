@@ -72,12 +72,13 @@ Shared props are defined in `config/web.php` under the `inertia` component. Acce
 import { usePage } from "@inertiajs/vue3";
 
 const page = usePage();
+const appName = page.props.appName;
+const canAccessDebug = page.props.canAccessDebug;
 const user = page.props.auth?.user;
-const turnstileKey = page.props.turnstileSiteKey;
 </script>
 ```
 
-Available shared props: `auth`, `flash`, `turnstileSiteKey`.
+Available shared props: `appName`, `auth`, `canAccessDebug`, and `flash`.
 
 ## Using Flowbite Vue components
 

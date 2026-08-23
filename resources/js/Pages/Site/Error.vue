@@ -30,8 +30,7 @@ const props = defineProps({
       </h2>
       <p class="text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
         The above error occurred while the Web server was processing your
-        request. Please contact us if you think this is a server error. Thank
-        you.
+        request. Please try again later if this appears to be a server error.
       </p>
       <Link
         href="/"

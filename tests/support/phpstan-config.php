@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use app\models\User;
+use PHPForge\Vite\Configuration\DevelopmentConfiguration;
+use PHPForge\Vite\Vite;
 use yii\caching\FileCache;
 use yii\inertia\Manager;
-use yii\inertia\vue\Vite;
 use yii\log\FileTarget;
 use yii\symfonymailer\Mailer;
 use yii\web\Application;
@@ -32,6 +33,12 @@ return [
         ],
         'inertiaVue' => [
             'class' => Vite::class,
+            '__construct()' => [
+                'configuration' => new DevelopmentConfiguration(
+                    devServerUrl: 'http://localhost:5174',
+                ),
+                'entrypoints' => ['resources/js/app.js'],
+            ],
         ],
         'log' => [
             'targets' => [

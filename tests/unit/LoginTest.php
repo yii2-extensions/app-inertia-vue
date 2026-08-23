@@ -39,7 +39,6 @@ final class LoginTest extends \Codeception\Test\Unit
         $controller = new SiteController(
             'site',
             Yii::$app,
-            Yii::$app->mailer,
         );
 
         Yii::$app->controller = $controller;

@@ -4,22 +4,85 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\models\ContactForm;
+use PHPForge\Inertia\Prop\{ScrollMetadata, ScrollProp};
 use Throwable;
 use Yii;
+use yii\inertia\Inertia;
 use yii\inertia\web\Controller;
-use yii\mail\MailerInterface;
 use yii\web\{HttpException, Response};
 
 /**
- * Handles site pages: home, about, contact, and error actions.
+ * Handles site pages: home, about, and error actions.
  */
 final class SiteController extends Controller
 {
-    public function __construct($id, $module, private readonly MailerInterface $mailer, $config = [])
-    {
-        parent::__construct($id, $module, $config);
-    }
+    private const int PROTOCOL_PAGE_SIZE = 3;
+
+    private const array PROTOCOL_TRACE = [
+        [
+            'id' => 1,
+            'layer' => 'YII ADAPTER',
+            'title' => 'Yii receives the visit.',
+            'detail' => 'The adapter translates the incoming request into a framework-neutral context.',
+            'accent' => 'blue',
+        ],
+        [
+            'id' => 2,
+            'layer' => 'PHP CORE',
+            'title' => 'One page contract is shaped.',
+            'detail' => 'Component, props, URL, version, and protocol metadata stay together.',
+            'accent' => 'green',
+        ],
+        [
+            'id' => 3,
+            'layer' => 'SCROLL PROP',
+            'title' => 'The next page is declared.',
+            'detail' => 'Scroll metadata names the query key and the adjacent page identifiers.',
+            'accent' => 'orange',
+        ],
+        [
+            'id' => 4,
+            'layer' => 'OBSERVER',
+            'title' => 'The boundary enters view.',
+            'detail' => 'The client detects the edge of this contained scroll window.',
+            'accent' => 'blue',
+        ],
+        [
+            'id' => 5,
+            'layer' => 'PARTIAL RELOAD',
+            'title' => 'Only one prop travels.',
+            'detail' => 'Inertia requests protocolFeed instead of rebuilding the complete page.',
+            'accent' => 'green',
+        ],
+        [
+            'id' => 6,
+            'layer' => 'MERGE INTENT',
+            'title' => 'The next slice is appended.',
+            'detail' => 'The protocol marks protocolFeed.data as the merge path.',
+            'accent' => 'orange',
+        ],
+        [
+            'id' => 7,
+            'layer' => 'INTERFACE',
+            'title' => 'Existing entries remain.',
+            'detail' => 'Vue extends the list without remounting the surrounding evaluation.',
+            'accent' => 'blue',
+        ],
+        [
+            'id' => 8,
+            'layer' => 'HISTORY',
+            'title' => 'The visible page follows.',
+            'detail' => 'The query string tracks the page with the largest visible share.',
+            'accent' => 'green',
+        ],
+        [
+            'id' => 9,
+            'layer' => 'COMPLETE',
+            'title' => 'The final cursor resolves.',
+            'detail' => 'A null next page stops requests at the last protocol boundary.',
+            'accent' => 'orange',
+        ],
+    ];
 
     /**
      * Displays about page.
@@ -30,59 +93,6 @@ final class SiteController extends Controller
     {
         return $this->inertia(
             'Site/About',
-        );
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response Response object containing the rendered contact page.
-     */
-    public function actionContact(): Response
-    {
-        $model = new ContactForm();
-
-        /** @var array<string, mixed> $post */
-        $post = $this->request->post();
-
-        if ($model->load($post)) {
-            $params = Yii::$app->params;
-
-            try {
-                $sent = $model->contact(
-                    $this->mailer,
-                    $params['adminEmail'],
-                    $params['senderEmail'],
-                    $params['senderName'],
-                );
-            } catch (Throwable $e) {
-                Yii::error($e->getMessage(), __METHOD__);
-                $sent = false;
-            }
-
-            if ($sent) {
-                Yii::$app->session->setFlash(
-                    'success',
-                    'Thank you for contacting us. We will respond to you as soon as possible.',
-                );
-
-                return $this->redirect(['site/contact']);
-            }
-
-            if ($model->hasErrors()) {
-                Yii::$app->session->setFlash('errors', $model->getErrors());
-            } else {
-                Yii::$app->session->setFlash(
-                    'error',
-                    'Sorry, we are unable to send your message at this time.',
-                );
-            }
-
-            return $this->redirect(['site/contact']);
-        }
-
-        return $this->inertia(
-            'Site/Contact',
         );
     }
 
@@ -118,6 +128,55 @@ final class SiteController extends Controller
     {
         return $this->inertia(
             'Site/Index',
+            [
+                'protocolFeed' => $this->createProtocolFeed(),
+                'runtime' => [
+                    'framework' => Yii::getVersion(),
+                    'php' => PHP_VERSION,
+                    'requestId' => strtoupper(
+                        substr(
+                            hash('sha256', sprintf('%.6F', microtime(true))),
+                            0,
+                            8,
+                        ),
+                    ),
+                    'servedAt' => gmdate('H:i:s') . ' UTC',
+                ],
+            ],
+        );
+    }
+
+    /**
+     * Builds the deterministic pages used by the live Inertia scroll demonstration.
+     */
+    private function createProtocolFeed(): ScrollProp
+    {
+        $total = count(self::PROTOCOL_TRACE);
+        $totalPages = intdiv($total + self::PROTOCOL_PAGE_SIZE - 1, self::PROTOCOL_PAGE_SIZE);
+        $requestedPage = filter_var(
+            $this->request->getQueryParam('protocol', 1),
+            FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 1]],
+        );
+        $page = is_int($requestedPage) ? min($requestedPage, $totalPages) : 1;
+
+        return Inertia::scroll(
+            [
+                'data' => array_slice(
+                    self::PROTOCOL_TRACE,
+                    ($page - 1) * self::PROTOCOL_PAGE_SIZE,
+                    self::PROTOCOL_PAGE_SIZE,
+                ),
+                'page' => $page,
+                'pages' => $totalPages,
+                'total' => $total,
+            ],
+            new ScrollMetadata(
+                pageName: 'protocol',
+                previousPage: $page > 1 ? $page - 1 : null,
+                nextPage: $page < $totalPages ? $page + 1 : null,
+                currentPage: $page,
+            ),
         );
     }
 }
