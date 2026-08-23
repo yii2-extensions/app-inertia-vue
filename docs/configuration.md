@@ -29,23 +29,11 @@ Used by the migration to seed the initial admin user:
 
 **Important:** Change these before running migrations in shared or production environments.
 
-### Cloudflare Turnstile
-
-| Parameter             | Default  | Description              |
-| --------------------- | -------- | ------------------------ |
-| `turnstile.siteKey`   | Test key | Frontend widget key      |
-| `turnstile.secretKey` | Test key | Backend verification key |
-
-The default values are [Cloudflare test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/) that always pass validation. Replace them with real keys from the [Cloudflare dashboard](https://dash.cloudflare.com/) for production.
-
 ### Email
 
-| Parameter      | Default               | Description                    |
-| -------------- | --------------------- | ------------------------------ |
-| `adminEmail`   | `admin@example.com`   | Recipient for contact form     |
-| `senderEmail`  | `noreply@example.com` | From address for outgoing mail |
-| `senderName`   | `Example.com mailer`  | From name for outgoing mail    |
-| `supportEmail` | `support@example.com` | Support contact address        |
+| Parameter      | Default               | Description                          |
+| -------------- | --------------------- | ------------------------------------ |
+| `supportEmail` | `support@example.com` | From address for account email flows |
 
 ### User
 

@@ -9,8 +9,7 @@
         "@inertiajs/vue3": "^3.0",
         "flowbite": "^3.1",
         "flowbite-vue": "^0.2",
-        "vue": "^3.5",
-        "vue-turnstile": "^1.0.11"
+        "vue": "^3.5"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0",

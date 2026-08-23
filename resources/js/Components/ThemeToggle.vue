@@ -1,68 +1,60 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const theme = ref("light");
-const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-const getPreferred = () => {
-  const stored = localStorage.getItem("theme");
-
-  if (stored) {
-    return stored;
-  }
-
-  return mediaQuery.matches ? "dark" : "light";
-};
+let mediaQuery;
 
 const apply = (value, persist = true) => {
-  theme.value = value;
+    theme.value = value;
+    document.documentElement.classList.toggle("dark", value === "dark");
 
-  if (value === "dark") {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-
-  if (persist) {
-    localStorage.setItem("theme", value);
-  }
+    if (persist) {
+        localStorage.setItem("theme", value);
+    }
 };
 
 const toggle = () => {
-  apply(theme.value === "dark" ? "light" : "dark");
+    apply(theme.value === "dark" ? "light" : "dark");
 };
 
-const handleSystemThemeChange = (e) => {
-  if (!localStorage.getItem("theme")) {
-    apply(e.matches ? "dark" : "light", false);
-  }
+const handleSystemThemeChange = (event) => {
+    if (!localStorage.getItem("theme")) {
+        apply(event.matches ? "dark" : "light", false);
+    }
 };
 
 onMounted(() => {
-  const stored = localStorage.getItem("theme");
+    mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-  if (stored) {
-    apply(stored);
-  } else {
-    apply(getPreferred(), false);
-  }
+    const stored = localStorage.getItem("theme");
+    const preferred = stored ?? (mediaQuery.matches ? "dark" : "light");
 
-  mediaQuery.addEventListener("change", handleSystemThemeChange);
+    apply(preferred, Boolean(stored));
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
 });
 
 onUnmounted(() => {
-  mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    mediaQuery?.removeEventListener("change", handleSystemThemeChange);
 });
 </script>
 
 <template>
-  <button
-    class="p-2 text-gray-400 hover:text-white rounded-md text-lg transition-colors cursor-pointer"
-    :aria-label="
-      theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-    "
-    @click="toggle"
-  >
-    {{ theme === "dark" ? "&#9728;" : "&#127769;" }}
-  </button>
+    <button
+        type="button"
+        class="theme-switch"
+        :aria-label="
+            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+        "
+        :title="theme === 'dark' ? 'Use light mode' : 'Use dark mode'"
+        @click="toggle"
+    >
+        <span class="theme-switch__label">
+            {{ theme === "dark" ? "Light" : "Dark" }}
+        </span>
+        <span class="theme-switch__track" aria-hidden="true">
+            <span
+                :class="{ 'theme-switch__thumb--dark': theme === 'dark' }"
+            ></span>
+        </span>
+    </button>
 </template>

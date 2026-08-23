@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use app\models\User;
+use PHPForge\Vite\Configuration\{DevelopmentConfiguration, ProductionConfiguration};
+use PHPForge\Vite\Vite;
 use yii\caching\FileCache;
-use yii\inertia\{Manager, Vite};
-use yii\inertia\vue\Bootstrap;
+use yii\inertia\{Bootstrap, Manager};
 use yii\log\FileTarget;
 use yii\mail\MailerInterface;
 use yii\rbac\PhpManager;
@@ -55,9 +56,6 @@ $config = [
                     ];
                 },
                 'appName' => static fn(): string => Yii::$app->name,
-                'turnstileSiteKey' => static function (): string {
-                    return Yii::$app->params['turnstile.siteKey'];
-                },
             ],
             'version' => static function (): string {
                 $path = Yii::getAlias('@webroot/build/.vite/manifest.json');
@@ -67,13 +65,17 @@ $config = [
         ],
         'inertiaVue' => [
             'class' => Vite::class,
-            'baseUrl' => '@web/build',
-            'devMode' => YII_ENV === 'dev',
-            'devServerUrl' => 'http://localhost:5173',
-            'entrypoints' => [
-                'resources/js/app.js',
+            '__construct()' => [
+                'configuration' => YII_ENV === 'dev'
+                    ? new DevelopmentConfiguration(
+                        devServerUrl: 'http://localhost:5174',
+                    )
+                    : new ProductionConfiguration(
+                        manifestPath: dirname(__DIR__) . '/public/build/.vite/manifest.json',
+                        assetBaseUrl: '/build',
+                    ),
+                'entrypoints' => ['resources/js/app.js'],
             ],
-            'manifestPath' => '@webroot/build/.vite/manifest.json',
         ],
         'log' => [
             'targets' => [

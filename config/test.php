@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 use app\models\User;
 use app\tests\support\MailerBootstrap;
+use PHPForge\Vite\Configuration\DevelopmentConfiguration;
+use PHPForge\Vite\Vite;
 use yii\caching\FileCache;
-use yii\inertia\{Manager, Vite};
-use yii\inertia\vue\Bootstrap;
+use yii\inertia\{Bootstrap, Manager};
 use yii\rbac\PhpManager;
 use yii\symfonymailer\{Mailer, Message};
 use yii\web\JsonParser;
@@ -58,20 +59,16 @@ return [
                         ] : null,
                     ];
                 },
-                'turnstileSiteKey' => static function (): string {
-                    return Yii::$app->params['turnstile.siteKey'];
-                },
             ],
         ],
         'inertiaVue' => [
             'class' => Vite::class,
-            'baseUrl' => '@web/build',
-            'devMode' => true,
-            'devServerUrl' => 'http://localhost:5173',
-            'entrypoints' => [
-                'resources/js/app.js',
+            '__construct()' => [
+                'configuration' => new DevelopmentConfiguration(
+                    devServerUrl: 'http://localhost:5174',
+                ),
+                'entrypoints' => ['resources/js/app.js'],
             ],
-            'manifestPath' => '@webroot/build/.vite/manifest.json',
         ],
         'mailer' => [
             'class' => Mailer::class,
@@ -100,5 +97,5 @@ return [
     ],
     'controllerNamespace' => 'app\\controllers',
     'language' => 'en-US',
-    'params' => [...$params, 'turnstile.secretKey' => ''],
+    'params' => $params,
 ];

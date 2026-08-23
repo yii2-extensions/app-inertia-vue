@@ -1,7 +1,7 @@
 /*!
  * Client entrypoint for the Yii2 + Inertia.js + Vue 3 reference app.
  *
- * Boots the Inertia Vue 3 adapter against the `#app` root emitted by `yii\inertia\vue\Bootstrap`, wraps every
+ * Boots the Inertia Vue 3 client against the `#app` root emitted by `yii\inertia\Bootstrap`, wraps every
  * resolved page in the shared {@link Layout} component, and mounts the tree via `createApp` + `createInertiaApp`.
  *
  * Pages are resolved eagerly from `resources/js/Pages/**\/*.vue` via Vite's `import.meta.glob`, so every page is
@@ -28,7 +28,7 @@ createInertiaApp({
   page: pageData,
   progress: {
     delay: 250,
-    color: "#1a56db",
+    color: "#40b3d8",
     includeCSS: true,
     showSpinner: true,
   },

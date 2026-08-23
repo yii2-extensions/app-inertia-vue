@@ -1,40 +1,62 @@
 <script setup>
-import { usePage } from "@inertiajs/vue3";
-
-const page = usePage();
 const year = new Date().getFullYear();
 </script>
 
 <template>
-  <footer
-    class="mt-auto py-4 bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"
-  >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div
-        class="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
-      >
-        <span>&copy; {{ page.props.appName }} {{ year }}</span>
-        <a
-          href="https://www.yiiframework.com/"
-          rel="external"
-          aria-label="Powered by Yii Framework"
-          class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 no-underline transition-colors"
-        >
-          Powered by
-          <img
-            src="/images/yii3_full_for_light.svg"
-            alt=""
-            aria-hidden="true"
-            class="inline-block align-text-bottom h-7 dark:hidden"
-          />
-          <img
-            src="/images/yii3_full_for_dark.svg"
-            alt=""
-            aria-hidden="true"
-            class="hidden dark:inline-block align-text-bottom h-7"
-          />
-        </a>
-      </div>
-    </div>
-  </footer>
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <div class="site-footer__brand">
+                <a
+                    href="https://www.yiiframework.com/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    aria-label="Yii Framework website"
+                >
+                    <img
+                        src="/images/yii_logo_light.svg"
+                        alt="Yii Framework"
+                        class="dark:hidden"
+                    />
+                    <img
+                        src="/images/yii_logo_dark.svg"
+                        alt="Yii Framework"
+                        class="hidden dark:block"
+                    />
+                </a>
+                <p>
+                    A working Yii 22 + Inertia + Vue reference for the
+                    framework's next development line.
+                </p>
+            </div>
+
+            <div class="site-footer__links" aria-label="Project links">
+                <a
+                    href="https://github.com/yiisoft/yii2/tree/22.0"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    Branch 22.0
+                </a>
+                <a
+                    href="https://github.com/yiisoft/yii2/blob/22.0/framework/UPGRADE-22.md"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    Upgrade guide
+                </a>
+                <a
+                    href="https://github.com/yii2-extensions/app-inertia-vue"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    Application source
+                </a>
+            </div>
+
+            <div class="site-footer__status">
+                <span><i aria-hidden="true"></i> Development preview</span>
+                <small>&copy; {{ year }} Terabytesoftw · BSD-3-Clause</small>
+            </div>
+        </div>
+    </footer>
 </template>

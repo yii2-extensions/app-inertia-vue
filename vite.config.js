@@ -13,6 +13,8 @@ export default defineConfig({
     },
   },
   server: {
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
+    port: 5174,
+    strictPort: true,
   },
 });

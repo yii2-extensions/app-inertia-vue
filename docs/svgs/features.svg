@@ -16,8 +16,8 @@
     <g>
         <rect class="box-bg" x="610" y="20" width="570" height="85" rx="6"/>
         <rect x="610" y="20" width="4" height="85" fill="#42b883"/>
-        <text class="title" x="630" y="52">Cloudflare Turnstile</text>
-        <text class="content" x="630" y="82">CAPTCHA on contact form &#8226; Test keys included &#8226; Auto dark theme</text>
+        <text class="title" x="630" y="52">Yii 22.0 Preview</text>
+        <text class="content" x="630" y="82">Standalone actions &#8226; Global UNION controls &#8226; Modern PHP baseline</text>
     </g>
 
     <g>

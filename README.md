@@ -27,7 +27,7 @@
 
 <p align="center">
     <strong>Skeleton <a href="https://github.com/yiisoft/yii2/tree/22.0">Yii2</a> application with Inertia.js + Vue 3 integration</strong><br>
-    <em>Server-driven SPA with Tailwind CSS v4, Flowbite, dark mode, Cloudflare Turnstile, and Codeception tests</em>
+    <em>Server-driven SPA with Tailwind CSS v4, Flowbite, dark mode, and Codeception tests</em>
 </p>
 
 Use the **"Use this template"** button on GitHub to create your own repository from this template.
@@ -42,13 +42,7 @@ Use the **"Use this template"** button on GitHub to create your own repository f
 <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/home-dark.png">
     <source media="(prefers-color-scheme: light)" srcset="docs/images/home-light.png">
-    <img src="docs/images/home-light.png" alt="Inertia.js + Vue 3 Application Template">
-</picture>
-
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/users-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="docs/images/users-light.png">
-    <img src="docs/images/users-light.png" alt="User Directory with Flowbite Table">
+    <img src="docs/images/home-light.png" alt="Yii 22.0 preview hero and Vite 8 runtime tooling">
 </picture>
 
 ## Quick start
@@ -85,15 +79,15 @@ YII_ENV=dev ./yii serve
 
 How the pieces connect:
 
-- `public/index.php` reads the `YII_ENV` environment variable. When it equals `dev`, `inertiaVue.devMode` evaluates to
-  `true` in `config/web.php`, and the root view emits `<script>` tags pointing at `http://localhost:5173` instead of the
-  built manifest.
+- `public/index.php` reads the `YII_ENV` environment variable. When it equals `dev`, Yii's service locator lazily constructs
+  the framework-agnostic Vite facade with `DevelopmentConfiguration`, and the root view emits `<script>` tags pointing at
+  `http://localhost:5174` instead of the built manifest.
 - Vue HMR is carried natively by `@vite/client` together with `@vitejs/plugin-vue`; no additional preamble is required.
 - Before deploying, stop the Vite dev server, run `npm run build`, unset `YII_ENV` (or set it to `prod`), and serve
-  `public/`. Production mode reads hashed assets from `public/build/` via the Vite manifest.
+  `public/`. `ProductionConfiguration` reads hashed assets from `public/build/` via the Vite manifest.
 
-For CORS guidance on non-localhost setups (Docker, tunnels, reverse proxies), troubleshooting, and the full
-production-switch procedure, see the adapter's [Development Notes](https://github.com/yii2-extensions/inertia-vue/blob/main/docs/development.md).
+For manifest options, development-server behavior, and CORS configuration, see the
+[`php-forge/vite` documentation](https://github.com/php-forge/vite).
 
 ## Docker
 
