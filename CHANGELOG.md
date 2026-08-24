@@ -28,3 +28,4 @@ The format is based on Keep a Changelog, and this project adheres to Semantic Ve
 - feat: add favicon support by including SVG and ICO files in the project and linking them in the main HTML template.
 - chore: remove unsed file.
 - feat: add a responsive Yii 22.0 preview landing page with live Inertia request proof, actionable application flows, Yii-branded light/dark themes, social preview metadata, and framework-agnostic Vite/Inertia integrations.
+- chore: update composer dependencies to remove `@dev` versions for stability.
