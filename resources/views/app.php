@@ -61,7 +61,7 @@ $this->beginPage();
     </script>
     <?= Html::csrfMetaTags() ?>
     <?php $this->head(); ?>
-    <?= (new HtmlRenderer())->render($vite->resolve()) ?>
+    <?= HtmlRenderer::create()->render($vite->resolve()) ?>
 </head>
 <body class="flex flex-col h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans antialiased">
 <?php $this->beginBody(); ?>
