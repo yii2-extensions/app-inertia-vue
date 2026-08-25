@@ -34,7 +34,7 @@ return [
         'inertiaVue' => [
             'class' => Vite::class,
             '__construct()' => [
-                'configuration' => new DevelopmentConfiguration(
+                'configuration' => DevelopmentConfiguration::create(
                     devServerUrl: 'http://localhost:5174',
                 ),
                 'entrypoints' => ['resources/js/app.js'],
