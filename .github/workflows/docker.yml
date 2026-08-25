@@ -38,7 +38,7 @@ jobs:
         run: docker compose exec -T php bash -c "chown -R www-data:www-data /app/runtime /app/public/assets && chmod -R ug+rwX /app/runtime /app/public/assets"
 
       - name: Install Node.js and npm.
-        run: docker compose exec -T php bash -c "apt-get update && apt-get install -y nodejs npm"
+        run: docker compose exec -T php bash -c "apt-get update && apt-get install -y nodejs npm && npm install --global npm@latest"
 
       - name: Composer install.
         run: docker compose exec -T php bash -c "git config --global --add safe.directory /app && composer install --prefer-dist --no-progress --optimize-autoloader"
