@@ -22,7 +22,7 @@
     "require": {
         "php": ">=8.3",
         "ext-filter": "*",
-        "php-forge/foxy": "^0.3@dev",
+        "php-forge/foxy": "^0.2",
         "php-forge/inertia": "^0.2",
         "php-forge/vite": "^0.2",
         "yii2-extensions/inertia": "^0.3",
