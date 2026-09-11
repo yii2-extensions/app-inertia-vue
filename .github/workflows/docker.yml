@@ -40,6 +40,9 @@ jobs:
       - name: Install Node.js and npm.
         run: docker compose exec -T php bash -c "apt-get update && apt-get install -y nodejs npm"
 
+      - name: Update npm.
+        run: docker compose exec -T php npm install -g npm@10
+
       - name: Update Composer.
         run: docker compose exec -T php composer self-update --2
 
