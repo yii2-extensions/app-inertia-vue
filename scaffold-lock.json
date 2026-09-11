@@ -5,7 +5,7 @@
             "path": "vendor/php-forge/baseline"
         },
         "php-forge/coding-standard": {
-            "version": "0.3.3",
+            "version": "0.3.4",
             "path": "vendor/php-forge/coding-standard"
         }
     },

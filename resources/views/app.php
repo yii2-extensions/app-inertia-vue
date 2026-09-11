@@ -30,22 +30,22 @@ $this->beginPage();
 <head>
     <meta charset="<?= Html::encode(Yii::$app->charset) ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title data-inertia>Yii 22.0 Preview — Modern PHP, familiar Yii</title>
-    <meta data-inertia="description" name="description" content="Explore the Yii 22.0 development line with PHP 8.3, Inertia 3, Vue 3, and Vite 8.">
+    <title data-inertia>Yii 22 Preview</title>
+    <meta data-inertia="description" name="description" content="A working Yii 22, Inertia 3, Vue 3, and Vite 8 reference application.">
     <meta name="theme-color" content="#f6fbfd" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#071820" media="(prefers-color-scheme: dark)">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Yii 22.0 Preview — Modern PHP, familiar Yii">
-    <meta property="og:description" content="A working Yii 22, Inertia, Vue, and Vite reference application.">
+    <meta property="og:title" content="Yii 22 Preview">
+    <meta property="og:description" content="A working Yii 22, Inertia 3, Vue 3, and Vite 8 reference application.">
     <meta property="og:image" content="<?= Html::encode($ogImageUrl) ?>">
     <meta property="og:image:width" content="1731">
     <meta property="og:image:height" content="909">
-    <meta property="og:image:alt" content="Yii 22.0 Preview — Modern PHP, familiar Yii">
+    <meta property="og:image:alt" content="Yii 22 Preview">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Yii 22.0 Preview — Modern PHP, familiar Yii">
-    <meta name="twitter:description" content="A working Yii 22, Inertia, Vue, and Vite reference application.">
+    <meta name="twitter:title" content="Yii 22 Preview">
+    <meta name="twitter:description" content="A working Yii 22, Inertia 3, Vue 3, and Vite 8 reference application.">
     <meta name="twitter:image" content="<?= Html::encode($ogImageUrl) ?>">
-    <meta name="twitter:image:alt" content="Yii 22.0 Preview — Modern PHP, familiar Yii">
+    <meta name="twitter:image:alt" content="Yii 22 Preview">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="preconnect" href="https://fonts.googleapis.com">

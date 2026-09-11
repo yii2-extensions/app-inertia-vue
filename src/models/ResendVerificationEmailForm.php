@@ -91,7 +91,6 @@ final class ResendVerificationEmailForm extends Model
             }
 
             $transaction->commit();
-            $transaction = null;
         } catch (Throwable $e) {
             if ($transaction !== null && $transaction->isActive) {
                 $transaction->rollBack();

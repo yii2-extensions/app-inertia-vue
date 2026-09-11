@@ -25,7 +25,7 @@ const fieldError = (field) => {
 </script>
 
 <template>
-  <Head title="Login to your account" />
+  <Head title="Log in" />
 
   <div class="grow flex items-center justify-center py-8">
     <div
