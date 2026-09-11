@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <Head :title="String(status)" />
+  <Head :title="`Error ${status}`" />
 
   <div class="grow flex items-center justify-center text-center">
     <div class="mx-auto max-w-sm sm:max-w-md md:max-w-lg">

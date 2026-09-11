@@ -23,7 +23,7 @@ const fieldError = (field) => {
 </script>
 
 <template>
-  <Head title="Resend verification email" />
+  <Head title="Verify email" />
 
   <div class="grow flex items-center justify-center py-8">
     <div

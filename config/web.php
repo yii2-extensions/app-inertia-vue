@@ -3,14 +3,20 @@
 declare(strict_types=1);
 
 use app\models\User;
+use PHPForge\Inertia\Debug\{InertiaCollector, InertiaPanel};
+use PHPForge\Inertia\Protocol;
 use PHPForge\Vite\Configuration\{DevelopmentConfiguration, ProductionConfiguration};
+use PHPForge\Vite\Debug\{ViteCollector, VitePanel};
 use PHPForge\Vite\Vite;
 use yii\caching\FileCache;
+use yii\debug\Module as DebugModule;
 use yii\inertia\{Bootstrap, Manager};
+use yii\inertia\web\Request as InertiaRequest;
 use yii\log\FileTarget;
 use yii\mail\MailerInterface;
 use yii\rbac\PhpManager;
 use yii\symfonymailer\Mailer;
+use yii\web\JsonParser;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -97,11 +103,11 @@ $config = [
         ],
         'mailer' => MailerInterface::class,
         'request' => [
-            'class' => \yii\inertia\web\Request::class,
+            'class' => InertiaRequest::class,
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '',
             'parsers' => [
-                'application/json' => \yii\web\JsonParser::class,
+                'application/json' => JsonParser::class,
             ],
         ],
         'urlManager' => [
@@ -127,15 +133,29 @@ $config = [
         ],
     ],
     'controllerNamespace' => 'app\\controllers',
+    'modules' => [],
     'params' => $params,
 ];
 
 if (YII_DEBUG) {
+    $viteCollector = new ViteCollector();
+    $inertiaCollector = new InertiaCollector();
+
     $config['bootstrap'][] = 'debug';
-    $config['modules'] = [
-        'debug' => [
-            'class' => \yii\debug\Module::class,
-            'allowedIPs' => $debugAllowedIPs,
+    $config['components']['inertia']['protocol'] = Protocol::create(
+        eventDispatcher: $inertiaCollector,
+    );
+    $config['components']['inertiaVue']['__construct()']['eventDispatcher'] = $viteCollector;
+    $config['modules']['debug'] = [
+        'class' => DebugModule::class,
+        'allowedIPs' => $debugAllowedIPs,
+        'collectors' => [
+            'vite' => $viteCollector,
+            'inertia' => $inertiaCollector,
+        ],
+        'panels' => [
+            'vite' => new VitePanel(),
+            'inertia' => new InertiaPanel(),
         ],
     ];
 }

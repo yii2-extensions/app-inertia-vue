@@ -30,7 +30,7 @@ const fieldError = (field) => {
 </script>
 
 <template>
-  <Head title="Set your new password" />
+  <Head title="New password" />
 
   <div class="grow flex items-center justify-center py-8">
     <div
