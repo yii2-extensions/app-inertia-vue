@@ -1,7 +1,7 @@
 {
     "providers": {
         "php-forge/baseline": {
-            "version": "0.1.7",
+            "version": "0.2.0",
             "path": "vendor/php-forge/baseline"
         },
         "php-forge/coding-standard": {

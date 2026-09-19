@@ -24,7 +24,7 @@
         "ext-filter": "*",
         "php-forge/foxy": "^0.3",
         "php-forge/vite": "^0.5",
-        "yii2-extensions/inertia": "^0.5",
+        "yii2-extensions/inertia": "^0.6",
         "yiisoft/yii2": "^22.0@dev",
         "yiisoft/yii2-symfonymailer": "^22.0@dev"
     },
