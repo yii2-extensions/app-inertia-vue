@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use PHPForge\Inertia\Prop\{ScrollMetadata, ScrollProp};
 use Throwable;
 use Yii;
 use yii\inertia\Inertia;
@@ -126,10 +125,29 @@ final class SiteController extends Controller
      */
     public function actionIndex(): Response
     {
+        [$page, $totalPages] = $this->resolveProtocolPage();
+
         return $this->inertia(
             'Site/Index',
             [
-                'protocolFeed' => $this->createProtocolFeed(),
+                'protocolFeed' => Inertia::scroll(
+                    [
+                        'data' => array_slice(
+                            self::PROTOCOL_TRACE,
+                            ($page - 1) * self::PROTOCOL_PAGE_SIZE,
+                            self::PROTOCOL_PAGE_SIZE,
+                        ),
+                        'page' => $page,
+                        'pages' => $totalPages,
+                        'total' => count(self::PROTOCOL_TRACE),
+                    ],
+                    Inertia::scrollMetadata(
+                        pageName: 'protocol',
+                        previousPage: $page > 1 ? $page - 1 : null,
+                        nextPage: $page < $totalPages ? $page + 1 : null,
+                        currentPage: $page,
+                    ),
+                ),
                 'runtime' => [
                     'framework' => Yii::getVersion(),
                     'php' => PHP_VERSION,
@@ -147,36 +165,19 @@ final class SiteController extends Controller
     }
 
     /**
-     * Builds the deterministic pages used by the live Inertia scroll demonstration.
+     * Resolves the requested page of the live Inertia scroll demonstration.
+     *
+     * @return array{int, int} Requested page clamped to the available range, and the total page count.
      */
-    private function createProtocolFeed(): ScrollProp
+    private function resolveProtocolPage(): array
     {
-        $total = count(self::PROTOCOL_TRACE);
-        $totalPages = intdiv($total + self::PROTOCOL_PAGE_SIZE - 1, self::PROTOCOL_PAGE_SIZE);
+        $totalPages = intdiv(count(self::PROTOCOL_TRACE) + self::PROTOCOL_PAGE_SIZE - 1, self::PROTOCOL_PAGE_SIZE);
         $requestedPage = filter_var(
             $this->request->getQueryParam('protocol', 1),
             FILTER_VALIDATE_INT,
             ['options' => ['min_range' => 1]],
         );
-        $page = is_int($requestedPage) ? min($requestedPage, $totalPages) : 1;
 
-        return Inertia::scroll(
-            [
-                'data' => array_slice(
-                    self::PROTOCOL_TRACE,
-                    ($page - 1) * self::PROTOCOL_PAGE_SIZE,
-                    self::PROTOCOL_PAGE_SIZE,
-                ),
-                'page' => $page,
-                'pages' => $totalPages,
-                'total' => $total,
-            ],
-            new ScrollMetadata(
-                pageName: 'protocol',
-                previousPage: $page > 1 ? $page - 1 : null,
-                nextPage: $page < $totalPages ? $page + 1 : null,
-                currentPage: $page,
-            ),
-        );
+        return [is_int($requestedPage) ? min($requestedPage, $totalPages) : 1, $totalPages];
     }
 }
