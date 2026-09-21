@@ -103,7 +103,7 @@ $config = [
         'request' => [
             'class' => InertiaRequest::class,
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'yDxXnsvD4DrgFcHeJLfFQJk5wOanBqpC',
+            'cookieValidationKey' => '',
             'parsers' => [
                 'application/json' => JsonParser::class,
             ],
