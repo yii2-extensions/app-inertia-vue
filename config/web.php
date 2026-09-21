@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use app\models\User;
-use PHPForge\Inertia\Debug\{InertiaCollector, InertiaPanel};
-use PHPForge\Inertia\Protocol;
 use PHPForge\Vite\Configuration\{DevelopmentConfiguration, ProductionConfiguration};
 use PHPForge\Vite\Debug\{ViteCollector, VitePanel};
 use PHPForge\Vite\Vite;
@@ -105,7 +103,7 @@ $config = [
         'request' => [
             'class' => InertiaRequest::class,
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'yDxXnsvD4DrgFcHeJLfFQJk5wOanBqpC',
             'parsers' => [
                 'application/json' => JsonParser::class,
             ],
@@ -113,6 +111,17 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'rules' => [
+                '/' => 'site/index',
+                'about' => 'site/about',
+                'login' => 'user/login',
+                'logout' => 'user/logout',
+                'signup' => 'user/signup',
+                'users' => 'user/index',
+                'password-reset/<token:[\\w\\-]+>' => 'user/reset-password',
+                'verify-email/<token:[\\w\\-]+>' => 'user/verify-email',
+                '<controller:[\\w\\-]+>/<action:[\\w\\-]+>' => '<controller>/<action>',
+            ],
         ],
         'user' => [
             'identityClass' => User::class,
@@ -139,23 +148,17 @@ $config = [
 
 if (YII_DEBUG) {
     $viteCollector = new ViteCollector();
-    $inertiaCollector = new InertiaCollector();
 
     $config['bootstrap'][] = 'debug';
-    $config['components']['inertia']['protocol'] = Protocol::create(
-        eventDispatcher: $inertiaCollector,
-    );
     $config['components']['inertiaVue']['__construct()']['eventDispatcher'] = $viteCollector;
     $config['modules']['debug'] = [
         'class' => DebugModule::class,
         'allowedIPs' => $debugAllowedIPs,
         'collectors' => [
             'vite' => $viteCollector,
-            'inertia' => $inertiaCollector,
         ],
         'panels' => [
             'vite' => new VitePanel(),
-            'inertia' => new InertiaPanel(),
         ],
     ];
 }
