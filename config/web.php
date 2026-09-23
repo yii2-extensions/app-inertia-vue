@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use app\models\User;
+use PHPForge\Debug\Capture\CapturePolicy;
+use PHPForge\Inertia\Debug\{InertiaCollector, InertiaPanel};
 use PHPForge\Vite\Configuration\{DevelopmentConfiguration, ProductionConfiguration};
 use PHPForge\Vite\Debug\{ViteCollector, VitePanel};
 use PHPForge\Vite\Vite;
@@ -147,18 +149,26 @@ $config = [
 ];
 
 if (YII_DEBUG) {
-    $viteCollector = new ViteCollector();
-
     $config['bootstrap'][] = 'debug';
-    $config['components']['inertiaVue']['__construct()']['eventDispatcher'] = $viteCollector;
+
     $config['modules']['debug'] = [
         'class' => DebugModule::class,
         'allowedIPs' => $debugAllowedIPs,
         'collectors' => [
-            'vite' => $viteCollector,
+            'inertia' => static fn(CapturePolicy $policy): InertiaCollector => new InertiaCollector(
+                $policy->redact(...),
+                $policy->redactUrl(...),
+            ),
+            'vite' => ViteCollector::class,
         ],
         'panels' => [
-            'vite' => new VitePanel(),
+            'inertia' => InertiaPanel::class,
+            'vite' => VitePanel::class,
+        ],
+        // collector ID => application component that emits the events
+        'dispatchers' => [
+            'inertia' => 'inertia',
+            'vite' => 'inertiaVue',
         ],
     ];
 }
