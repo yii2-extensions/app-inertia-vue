@@ -22,7 +22,7 @@
     "require": {
         "php": ">=8.3",
         "ext-filter": "*",
-        "php-forge/foxy": "^0.3",
+        "php-forge/foxy": "^0.4",
         "php-forge/vite": "^0.5",
         "yii2-extensions/inertia": "^0.6",
         "yiisoft/yii2": "^22.0@dev",
@@ -43,7 +43,7 @@
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-strict-rules": "^2.0.3",
         "yii2-extensions/debug": "^0.2@dev",
-        "yii2-extensions/phpstan": "^0.5@dev",
+        "yii2-extensions/phpstan": "^0.6@dev",
         "yii2-extensions/scaffold": "^0.2"
     },
     "autoload": {
